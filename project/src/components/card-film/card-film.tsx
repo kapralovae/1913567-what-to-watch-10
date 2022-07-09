@@ -1,4 +1,5 @@
-function CardFilm (): JSX.Element {
+function CardFilm (){
+
   return(
     <article className="small-film-card catalog__films-card">
       <div className="small-film-card__image">

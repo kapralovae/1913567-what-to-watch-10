@@ -1,13 +1,14 @@
 import React from 'react';
 import CardFilm from '../../components/card-film/card-film';
 
-// function severalCardFilm(countCard: number): JSX.Element[] {
-//   const movieCards = [];
-//   for (let i = 0; i < countCard; i++) {
-//     movieCards.push(<CardFilm />);
-//   }
-//   return movieCards;
-// }
+function severalCardFilm(countCard: number) {
+  const movieCards = [];
+  for (let i = 0; i < countCard; i++) {
+    movieCards.push(<CardFilm key = {i}/>);
+  }
+
+  return movieCards;
+}
 
 type InfoMainFilm = {
   nameMainFilm: string;
@@ -153,27 +154,7 @@ function MainPage({nameMainFilm, genreMainFilm, dateMainFilm}: InfoMainFilm): JS
           </ul>
 
           <div className="catalog__films-list">
-            {/* {severalCardFilm(20).map((card) => card)} */}
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
-            <CardFilm />
+            {severalCardFilm(20)}
           </div>
 
           <div className="catalog__more">
