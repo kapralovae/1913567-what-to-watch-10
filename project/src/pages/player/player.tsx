@@ -39,4 +39,4 @@ function Player() {
   );
 }
 
-export default Player();
+export default Player;
