@@ -1,4 +1,6 @@
-function Player() {
+import { ListFilmsType } from '../../types/film';
+
+function Player({films}: ListFilmsType) {
   return (
     <div className="player">
       <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
