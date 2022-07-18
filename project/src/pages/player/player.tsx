@@ -1,9 +1,11 @@
 import { ListFilmsType } from '../../types/film';
 
 function Player({films}: ListFilmsType) {
+  const film = films.filter((element) => `/player/${element.id}` === window.location.pathname);
+
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film[0].video} className="player__video" poster="img/player-poster.jpg"></video>
 
       <button type="button" className="player__exit">Exit</button>
 
