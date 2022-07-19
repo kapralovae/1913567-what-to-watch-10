@@ -1,11 +1,13 @@
+import { useParams } from 'react-router-dom';
 import { ListFilmsType } from '../../types/film';
 
 function Player({films}: ListFilmsType) {
-  const film = films.filter((element) => `/player/${element.id}` === window.location.pathname);
+  const filmId = Number(useParams().id);
+  const film = films.find((element) => element.id === filmId);
 
   return (
     <div className="player">
-      <video src={film[0].video} className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film?.video} className="player__video" poster="img/player-poster.jpg"></video>
 
       <button type="button" className="player__exit">Exit</button>
 

@@ -1,10 +1,12 @@
 // import { ChangeEvent, FormEvent, TextareaHTMLAttributes, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/commentForm';
 import Logo from '../../components/logo/logo';
 import { ListFilmsType } from '../../types/film';
 
 function AddReview({films}: ListFilmsType) {
-  const film = films.filter((element) => `/films/${element.id}/review` === window.location.pathname);
+  const filmId = Number(useParams().id);
+  const film = films.find((element) => element.id === filmId);
 
   return (
     <section className="film-card film-card--full">
@@ -21,10 +23,10 @@ function AddReview({films}: ListFilmsType) {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{film[0].title}</a>
+                <Link to={`/films/${film?.id}`} className="breadcrumbs__link">{film?.title}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a href="/" className="breadcrumbs__link">Add review</a>
+                <Link to={`/films/${film?.id}/review`} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>
@@ -42,7 +44,7 @@ function AddReview({films}: ListFilmsType) {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={film[0].src} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={film?.src} alt="The Grand Budapest Hotel poster" width="218" height="327" />
         </div>
       </div>
 

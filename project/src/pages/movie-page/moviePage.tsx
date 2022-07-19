@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import { ListFilmsType } from '../../types/film';
 
 function MoviePage ({films}: ListFilmsType) {
-  const film = films.filter((element) => `/films/${element.id}` === window.location.pathname);
-
+  const filmId = Number(useParams().id);
+  const film = films.find((element) => element.id === filmId);
   return (
     <section>
       <section className="film-card film-card--full">
@@ -32,14 +32,14 @@ function MoviePage ({films}: ListFilmsType) {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film[0].title}</h2>
+              <h2 className="film-card__title">{film?.title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{film[0].genre}</span>
-                <span className="film-card__year">{film[0].reliase}</span>
+                <span className="film-card__genre">{film?.genre}</span>
+                <span className="film-card__year">{film?.reliase}</span>
               </p>
 
               <div className="film-card__buttons">
-                <Link to={`/player/${film[0].id}`}>
+                <Link to={`/player/${film?.id}`}>
                   <button className="btn btn--play film-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
@@ -54,7 +54,7 @@ function MoviePage ({films}: ListFilmsType) {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={`/films/${film[0].id}/review`} className="btn film-card__button">Add review</Link>
+                <Link to={`/films/${film?.id}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@ function MoviePage ({films}: ListFilmsType) {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film[0].src} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={film?.src} alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -82,21 +82,21 @@ function MoviePage ({films}: ListFilmsType) {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">{film[0].rating}</div>
+                <div className="film-rating__score">{film?.rating}</div>
                 <p className="film-rating__meta">
-                  <span className="film-rating__level">{film[0].raitingLevel}</span>
-                  <span className="film-rating__count">{film[0].ratingCount}</span>
+                  <span className="film-rating__level">{film?.raitingLevel}</span>
+                  <span className="film-rating__count">{film?.ratingCount}</span>
                 </p>
               </div>
 
               <div className="film-card__text">
-                <p>{film[0].prevDescription}</p>
+                <p>{film?.prevDescription}</p>
 
-                <p>{film[0].mainDescription}</p>
+                <p>{film?.mainDescription}</p>
 
-                <p className="film-card__director"><strong>{film[0].director}</strong></p>
+                <p className="film-card__director"><strong>{film?.director}</strong></p>
 
-                <p className="film-card__starring"><strong>{film[0].starring}</strong></p>
+                <p className="film-card__starring"><strong>{film?.starring}</strong></p>
               </div>
             </div>
           </div>

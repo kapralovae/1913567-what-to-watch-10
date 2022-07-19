@@ -12,17 +12,10 @@ function CommentForm () {
 
     const {value, name} = evt.target;
     setCheck(Number(value));
-    if (name === 'rating') {
-      setInputData({
-        ...inputData,
-        [name]: value,
-      });
-    } else {
-      setInputData({
-        ...inputData,
-        [name]: value,
-      });
-    }
+    setInputData({
+      ...inputData,
+      [name]: value,
+    });
   };
 
   const postForm = (evt: FormEvent<HTMLFormElement>) => {
