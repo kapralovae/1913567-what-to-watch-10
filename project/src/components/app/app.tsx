@@ -8,43 +8,53 @@ import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/signIn';
 import { Fragment } from 'react';
 import PrivateRoute from '../private-route/privateRoute';
+import { Films } from '../../types/film';
 
 type AppProps = {
   nameMainFilm: string;
   genreMainFilm: string;
   dateMainFilm: number;
+  films: Films;
 }
 
-function App({nameMainFilm, genreMainFilm, dateMainFilm}: AppProps): JSX.Element {
+function App({nameMainFilm, genreMainFilm, dateMainFilm, films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element = {<MainPage nameMainFilm = {nameMainFilm} genreMainFilm = {genreMainFilm} dateMainFilm = {dateMainFilm}/>}
+          element =
+            {
+              <MainPage
+                nameMainFilm={nameMainFilm}
+                genreMainFilm={genreMainFilm}
+                dateMainFilm={dateMainFilm}
+                films={films}
+              />
+            }
         />
         <Route
           path='/films/:id'
-          element = {<MoviePage />}
+          element = {<MoviePage films={films}/>}
         />
         <Route
           path='/films/:id/review'
-          element = {<AddReview />}
+          element = {<AddReview films={films} />}
         />
         <Route
           path={AppRoute.MyList}
           element = {
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.NoAuth}
+              authorizationStatus={AuthorizationStatus.Auth}
             >
 
-              <MyList />
+              <MyList films={films}/>
             </PrivateRoute>
           }
         />
         <Route
           path='/player/:id'
-          element = {<Player />}
+          element = {<Player films={films}/>}
         />
         <Route
           path={AppRoute.SignIn}
