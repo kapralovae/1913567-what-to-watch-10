@@ -20,10 +20,10 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        nameMainFilm = {Setting.NAME_MAIN_FILMS}
-        genreMainFilm = {Setting.GENRE_MAIN_FILM}
-        dateMainFilm = {Setting.DATE_MAIN_FILM}
-        films = {films}
+        nameMainFilm={Setting.NAME_MAIN_FILMS}
+        genreMainFilm={Setting.GENRE_MAIN_FILM}
+        dateMainFilm={Setting.DATE_MAIN_FILM}
+        films={films}
       />
     </Provider>
   </React.StrictMode>,
