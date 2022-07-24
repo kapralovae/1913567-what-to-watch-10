@@ -9,11 +9,15 @@ const initialState = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(chengeGenreAction, (state) => {
-      state.genre = '';
+    .addCase(chengeGenreAction, (state, action) => {
+      state.genre = action.payload;
     })
     .addCase(getFilmsWithGenreAction, (state) => {
-      state.films = films.filter((film) => film.genre === state.genre);
+      if (state.genre === 'All genres') {
+        state.films = films;
+      } else {
+        state.films = films.filter((film) => film.genre === state.genre);
+      }
     })
     .addCase(resetFilterGenreAction, (state) => {
       state.genre = 'All genres';

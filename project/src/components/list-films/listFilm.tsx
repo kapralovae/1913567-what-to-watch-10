@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { ListFilmsType } from '../../types/film';
+import { useAppSelector } from '../../hooks';
 import CardFilm from '../card-film/card-film';
 
 
-function ListFilms ({films}: ListFilmsType): JSX.Element{
-
+function ListFilms (): JSX.Element{
+  const films = useAppSelector((state) => state.films);
   const [activeId, setActiveId] = useState({
     id: '',
   });
-
 
   const mouseOverHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
     evt.preventDefault();

@@ -9,6 +9,7 @@ import SignIn from '../../pages/sign-in/signIn';
 import { Fragment } from 'react';
 import PrivateRoute from '../private-route/privateRoute';
 import { Films } from '../../types/film';
+import FilterGenres from '../filter-genres/filterGenres';
 
 type AppProps = {
   nameMainFilm: string;
@@ -29,8 +30,14 @@ function App({nameMainFilm, genreMainFilm, dateMainFilm, films}: AppProps): JSX.
                 nameMainFilm={nameMainFilm}
                 genreMainFilm={genreMainFilm}
                 dateMainFilm={dateMainFilm}
-                films={films}
               />
+            }
+        />
+        <Route
+          path='/:id'
+          element =
+            {
+              <FilterGenres/>
             }
         />
         <Route
@@ -48,7 +55,7 @@ function App({nameMainFilm, genreMainFilm, dateMainFilm, films}: AppProps): JSX.
               authorizationStatus={AuthorizationStatus.Auth}
             >
 
-              <MyList films={films}/>
+              <MyList />
             </PrivateRoute>
           }
         />

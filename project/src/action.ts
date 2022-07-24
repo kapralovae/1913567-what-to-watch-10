@@ -6,6 +6,8 @@ export const Action = {
   RESET_FILTER_GENRE:'RESET_FILTER_GENRE',
 };
 
-export const chengeGenreAction = createAction(Action.CHANGE_GANRE);
+export const chengeGenreAction = createAction(Action.CHANGE_GANRE, (value)=> ({
+  payload:value,
+}));
 export const getFilmsWithGenreAction = createAction(Action.GET_FILMS_WITH_GENRE);
 export const resetFilterGenreAction = createAction(Action.RESET_FILTER_GENRE);
