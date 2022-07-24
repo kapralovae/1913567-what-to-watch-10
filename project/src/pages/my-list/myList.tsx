@@ -1,8 +1,7 @@
 import ListFilms from '../../components/list-films/listFilm';
 import Logo from '../../components/logo/logo';
-import { ListFilmsType } from '../../types/film';
 
-function MyList({films}: ListFilmsType) {
+function MyList() {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -24,7 +23,7 @@ function MyList({films}: ListFilmsType) {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <ListFilms films={films}/>
+        <ListFilms />
       </section>
 
       <footer className="page-footer">

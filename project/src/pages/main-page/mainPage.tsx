@@ -1,17 +1,16 @@
 import React from 'react';
-import ListFilms from '../../components/list-films/listFilm';
+import FilterGenres from '../../components/filter-genres/filterGenres';
+import { Footer } from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import { Films } from '../../types/film';
 
 type InfoMainFilm = {
   nameMainFilm: string;
   genreMainFilm: string;
   dateMainFilm: number;
-  films: Films;
 }
 
 function MainPage(props: InfoMainFilm): JSX.Element {
-  const {nameMainFilm, genreMainFilm, dateMainFilm, films} = props;
+  const {nameMainFilm, genreMainFilm, dateMainFilm} = props;
 
   return(
     <React.Fragment>
@@ -110,43 +109,7 @@ function MainPage(props: InfoMainFilm): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="/" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/" className="catalog__genres-link">Kids & Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="/" className="catalog__genres-link">Thrillers</a>
-            </li>
-          </ul>
-
-
-          <ListFilms
-            films={films}
-          />
+          <FilterGenres />
 
 
           <div className="catalog__more">
@@ -154,19 +117,7 @@ function MainPage(props: InfoMainFilm): JSX.Element {
           </div>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="/" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </React.Fragment>
 
