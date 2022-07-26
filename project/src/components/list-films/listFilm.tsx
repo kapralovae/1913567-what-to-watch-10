@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import CardFilm from '../card-film/card-film';
+import { ShowMoreButton } from '../show-more-button/showMoreButton';
 
 
 function ListFilms (): JSX.Element{
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector((state) => state.filmsForRender);
   const [activeId, setActiveId] = useState({
     id: '',
   });
@@ -19,11 +20,14 @@ function ListFilms (): JSX.Element{
   };
 
   return (
-    <div onMouseOver={mouseOverHandler}
-      className='catalog__films-list'
-    >
-      {films.map((film) => <CardFilm item={film} key={film.src}></CardFilm>)}
-    </div>
+    <>
+      <div onMouseOver={mouseOverHandler}
+        className='catalog__films-list'
+      >
+        {films.map((film) => <CardFilm item={film} key={film.src}></CardFilm>)}
+      </div>
+      <ShowMoreButton />
+    </>
   );
 }
 

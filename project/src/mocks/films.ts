@@ -135,5 +135,20 @@ export const films: Film[] = [
     reliase: 2008,
     video: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
   },
+  {
+    src: 'https://proprikol.ru/wp-content/uploads/2020/12/salyut-krasivye-kartinki-11.jpg',
+    title: 'картинка',
+    id: 9,
+    rating: 9,
+    director: 'Director: You',
+    starring: 'Bill Murray, Edward Norton, Jude Law',
+    prevDescription: '1ый абзац',
+    mainDescription: '2ой абзац',
+    raitingLevel: 'Very good',
+    ratingCount: 'Сколько-то ratings',
+    genre: 'Dramas',
+    reliase: 2009,
+    video: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
+  },
 
 ];

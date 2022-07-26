@@ -12,9 +12,9 @@ function FilterGenres () {
   const clickHandler = (evt: React.MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
     const dataAttribute = evt.currentTarget.getAttribute('data-genre');
+    setElementLi(String(dataAttribute));
     dispatch(chengeGenreAction(String(dataAttribute)));
     dispatch(getFilmsWithGenreAction());
-    setElementLi(String(dataAttribute));
   };
 
   return (

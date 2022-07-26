@@ -110,11 +110,6 @@ function MainPage(props: InfoMainFilm): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <FilterGenres />
-
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
         </section>
 
         <Footer />
