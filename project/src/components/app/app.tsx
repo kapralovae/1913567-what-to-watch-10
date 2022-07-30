@@ -8,17 +8,15 @@ import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/signIn';
 import { Fragment } from 'react';
 import PrivateRoute from '../private-route/privateRoute';
-import { Films } from '../../types/film';
 import FilterGenres from '../filter-genres/filterGenres';
 
 type AppProps = {
   nameMainFilm: string;
   genreMainFilm: string;
   dateMainFilm: number;
-  films: Films;
 }
 
-function App({nameMainFilm, genreMainFilm, dateMainFilm, films}: AppProps): JSX.Element {
+function App({nameMainFilm, genreMainFilm, dateMainFilm}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -42,11 +40,11 @@ function App({nameMainFilm, genreMainFilm, dateMainFilm, films}: AppProps): JSX.
         />
         <Route
           path='/films/:id'
-          element = {<MoviePage films={films}/>}
+          element = {<MoviePage />}
         />
         <Route
           path='/films/:id/review'
-          element = {<AddReview films={films} />}
+          element = {<AddReview />}
         />
         <Route
           path={AppRoute.MyList}
@@ -61,7 +59,7 @@ function App({nameMainFilm, genreMainFilm, dateMainFilm, films}: AppProps): JSX.
         />
         <Route
           path='/player/:id'
-          element = {<Player films={films}/>}
+          element = {<Player />}
         />
         <Route
           path={AppRoute.SignIn}

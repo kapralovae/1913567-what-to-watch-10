@@ -2,9 +2,10 @@
 import { Link, useParams } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/commentForm';
 import Logo from '../../components/logo/logo';
-import { ListFilmsType } from '../../types/film';
+import { useAppSelector } from '../../hooks';
 
-function AddReview({films}: ListFilmsType) {
+function AddReview() {
+  const films = useAppSelector((state) => state.filmsForRender);
   const filmId = Number(useParams().id);
   const film = films.find((element) => element.id === filmId);
 
@@ -23,7 +24,7 @@ function AddReview({films}: ListFilmsType) {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${film?.id}`} className="breadcrumbs__link">{film?.title}</Link>
+                <Link to={`/films/${film?.id}`} className="breadcrumbs__link">{film?.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <Link to={`/films/${film?.id}/review`} className="breadcrumbs__link">Add review</Link>
@@ -44,7 +45,7 @@ function AddReview({films}: ListFilmsType) {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={film?.src} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={film?.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
         </div>
       </div>
 
