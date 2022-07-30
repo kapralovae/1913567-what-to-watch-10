@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { store } from './store';
 import { checkAuthAction, fetchFilmsAction } from './store/api-actions';
+import ErrorMessage from './components/error-message/error-message';
 
 const Setting = {
   NAME_MAIN_FILMS: 'The Grand Budapest Hotel',
@@ -22,6 +23,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ErrorMessage />
       <App
         nameMainFilm={Setting.NAME_MAIN_FILMS}
         genreMainFilm={Setting.GENRE_MAIN_FILM}

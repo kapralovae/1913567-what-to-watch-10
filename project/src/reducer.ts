@@ -12,7 +12,7 @@ type InitialStateType = {
   isRenderShowMoreButton: boolean,
   countRenderFilms: number,
   filmsForRender: Films,
-  authorizationStatus: string,
+  authorizationStatus: AuthorizationStatus,
   error: string | null,
   isDataLoaded: boolean,
 };
