@@ -2,14 +2,18 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { films } from './mocks/films';
 import { store } from './store';
+import { checkAuthAction, fetchFilmsAction } from './store/api-actions';
+import ErrorMessage from './components/error-message/error-message';
 
 const Setting = {
   NAME_MAIN_FILMS: 'The Grand Budapest Hotel',
   GENRE_MAIN_FILM: 'Drama',
   DATE_MAIN_FILM: 2014,
 };
+
+store.dispatch(fetchFilmsAction());
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -19,11 +23,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ErrorMessage />
       <App
         nameMainFilm={Setting.NAME_MAIN_FILMS}
         genreMainFilm={Setting.GENRE_MAIN_FILM}
         dateMainFilm={Setting.DATE_MAIN_FILM}
-        films={films}
       />
     </Provider>
   </React.StrictMode>,

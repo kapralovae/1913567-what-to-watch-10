@@ -1,9 +1,12 @@
 import { Link, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import { ListFilmsType } from '../../types/film';
+import { useAppSelector } from '../../hooks';
 
-function MoviePage ({films}: ListFilmsType) {
+
+function MoviePage () {
+
+  const films = useAppSelector((state) => state.filmsForRender);
   const filmId = Number(useParams().id);
   const film = films.find((element) => element.id === filmId);
   return (
@@ -11,7 +14,7 @@ function MoviePage ({films}: ListFilmsType) {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={film?.backgroundImage} alt="The Grand Budapest Hotel" />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -33,10 +36,10 @@ function MoviePage ({films}: ListFilmsType) {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film?.title}</h2>
+              <h2 className="film-card__title">{film?.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{film?.genre}</span>
-                <span className="film-card__year">{film?.reliase}</span>
+                <span className="film-card__year">{film?.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -64,7 +67,7 @@ function MoviePage ({films}: ListFilmsType) {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film?.src} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={film?.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -85,15 +88,13 @@ function MoviePage ({films}: ListFilmsType) {
               <div className="film-rating">
                 <div className="film-rating__score">{film?.rating}</div>
                 <p className="film-rating__meta">
-                  <span className="film-rating__level">{film?.raitingLevel}</span>
-                  <span className="film-rating__count">{film?.ratingCount}</span>
+                  <span className="film-rating__level">{film?.rating}</span>
+                  <span className="film-rating__count">{film?.scoresCount}</span>
                 </p>
               </div>
 
               <div className="film-card__text">
-                <p>{film?.prevDescription}</p>
-
-                <p>{film?.mainDescription}</p>
+                <p>{film?.description}</p>
 
                 <p className="film-card__director"><strong>{film?.director}</strong></p>
 

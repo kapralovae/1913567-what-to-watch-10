@@ -24,7 +24,7 @@ function ListFilms (): JSX.Element{
       <div onMouseOver={mouseOverHandler}
         className='catalog__films-list'
       >
-        {films.map((film) => <CardFilm item={film} key={film.src}></CardFilm>)}
+        {films.map((film) => <CardFilm item={film} key={film.id}></CardFilm>)}
       </div>
       <ShowMoreButton />
     </>
