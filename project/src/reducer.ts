@@ -28,6 +28,9 @@ const initialState : InitialStateType = {
   isDataLoaded: false,
 };
 
+const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
+  authorizationStatus === AuthorizationStatus.Unknown;
+
 
 const reducer = createReducer(initialState, (builder) => {
   builder
@@ -84,4 +87,4 @@ const reducer = createReducer(initialState, (builder) => {
     });
 });
 
-export {reducer};
+export {reducer, isCheckedAuth};

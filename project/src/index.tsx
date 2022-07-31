@@ -12,8 +12,9 @@ const Setting = {
   DATE_MAIN_FILM: 2014,
 };
 
-store.dispatch(fetchFilmsAction());
 store.dispatch(checkAuthAction());
+store.dispatch(fetchFilmsAction());
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
