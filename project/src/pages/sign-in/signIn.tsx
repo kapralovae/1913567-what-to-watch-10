@@ -1,6 +1,34 @@
+import { FormEvent, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Footer } from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
+import { AppRoute } from '../../const';
+import { useAppDisptach } from '../../hooks';
+import { loginAction } from '../../store/api-actions';
+import { AuthData } from '../../types/auth-data';
 
 function SignIn () {
+  const dispatch = useAppDisptach();
+  const navigate = useNavigate();
+
+  const onSubmit = (authData: AuthData) => {
+    dispatch(loginAction(authData));
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      onSubmit({
+        login: loginRef.current.value,
+        password: passwordRef.current.value,
+      });
+      navigate(AppRoute.Root);
+    }
+  };
+
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -10,14 +38,14 @@ function SignIn () {
       </header>
 
       <div className="sign-in user-page__content">
-        <form action="#" className="sign-in__form">
+        <form onSubmit={handleSubmit} action="#" className="sign-in__form">
           <div className="sign-in__fields">
             <div className="sign-in__field">
-              <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
+              <input ref={loginRef} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
             <div className="sign-in__field">
-              <input className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
+              <input ref={passwordRef} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
           </div>
@@ -27,19 +55,7 @@ function SignIn () {
         </form>
       </div>
 
-      <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { AvatarLogin } from '../../components/avatar-login/avatar-login';
 import FilterGenres from '../../components/filter-genres/filterGenres';
 import { Footer } from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
@@ -60,16 +61,7 @@ function MainPage(props: InfoMainFilm): JSX.Element {
         <header className="page-header film-card__head">
           <Logo />
 
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a href="/" className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <AvatarLogin />
         </header>
 
         <div className="film-card__wrap">
