@@ -66,7 +66,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
 );
 
 export const clearErrorAction = createAsyncThunk(
-  'game/clearError',
+  'clearError',
   () => {
     setTimeout(
       () => store.dispatch(setError(null)),

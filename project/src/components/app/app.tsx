@@ -11,15 +11,13 @@ import PrivateRoute from '../private-route/privateRoute';
 import FilterGenres from '../filter-genres/filterGenres';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { isCheckedAuth } from '../../reducer';
 
 type AppProps = {
   nameMainFilm: string;
   genreMainFilm: string;
   dateMainFilm: number;
 }
-const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
-  authorizationStatus === AuthorizationStatus.Unknown;
-
 
 function App({nameMainFilm, genreMainFilm, dateMainFilm}: AppProps): JSX.Element {
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
