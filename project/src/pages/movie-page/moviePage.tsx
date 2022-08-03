@@ -2,11 +2,12 @@ import { Link, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 import { useAppSelector } from '../../hooks';
+import { getFilmsForRender } from '../../store/film-data/selectors';
 
 
 function MoviePage () {
 
-  const films = useAppSelector((state) => state.filmsForRender);
+  const films = useAppSelector(getFilmsForRender);
   const filmId = Number(useParams().id);
   const film = films.find((element) => element.id === filmId);
   return (

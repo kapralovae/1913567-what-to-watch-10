@@ -1,8 +1,9 @@
-import { getMoreFilms } from '../../action';
 import { useAppDisptach, useAppSelector } from '../../hooks';
+import { getMoreFilms } from '../../store/film-data/film-data';
+import { getIsRenderShowMoreButton } from '../../store/film-data/selectors';
 
 function ShowMoreButton () {
-  const isRenderButton = useAppSelector((state) => state.isRenderShowMoreButton);
+  const isRenderButton = useAppSelector(getIsRenderShowMoreButton);
   const dispatch = useAppDisptach();
 
   const clickButtonHandler = () => {

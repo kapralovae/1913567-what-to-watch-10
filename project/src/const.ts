@@ -25,4 +25,6 @@ export enum NameSpace{
   Process = 'Process',
 }
 
-export const TIMEOUT_SHOW_ERROR = 3000;
+export const COUNT_RENDER_FILMS = 8;
+
+export const TIMEOUT_SHOW_ERROR = 2000;

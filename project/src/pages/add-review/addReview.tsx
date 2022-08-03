@@ -3,9 +3,10 @@ import { Link, useParams } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/commentForm';
 import Logo from '../../components/logo/logo';
 import { useAppSelector } from '../../hooks';
+import { getFilmsForRender } from '../../store/film-data/selectors';
 
 function AddReview() {
-  const films = useAppSelector((state) => state.filmsForRender);
+  const films = useAppSelector(getFilmsForRender);
   const filmId = Number(useParams().id);
   const film = films.find((element) => element.id === filmId);
 

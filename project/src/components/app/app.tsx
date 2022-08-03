@@ -9,9 +9,11 @@ import SignIn from '../../pages/sign-in/signIn';
 import { Fragment } from 'react';
 import PrivateRoute from '../private-route/privateRoute';
 import FilterGenres from '../filter-genres/filterGenres';
-import { useAppSelector } from '../../hooks';
+import { useAppDisptach, useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import { isCheckedAuth } from '../../reducer';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { getFilmsFromServer, getIsDataLoader } from '../../store/film-process/selectors';
+import { loadFilms } from '../../store/film-data/film-data';
 
 type AppProps = {
   nameMainFilm: string;
@@ -20,9 +22,13 @@ type AppProps = {
 }
 
 function App({nameMainFilm, genreMainFilm, dateMainFilm}: AppProps): JSX.Element {
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoaded = useAppSelector(getIsDataLoader);
+  const filmsFromServer = useAppSelector(getFilmsFromServer);
+  const dispatch = useAppDisptach();
+  dispatch(loadFilms(filmsFromServer));
 
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  if ((authorizationStatus === AuthorizationStatus.Unknown) || isDataLoaded) {
     return (
       <LoadingScreen />
     );

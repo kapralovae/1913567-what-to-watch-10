@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
+import { getFilmsForRender } from '../../store/film-data/selectors';
 import CardFilm from '../card-film/card-film';
 import { ShowMoreButton } from '../show-more-button/showMoreButton';
 
 
 function ListFilms (): JSX.Element{
-  const films = useAppSelector((state) => state.filmsForRender);
+  const films = useAppSelector(getFilmsForRender);
   const [activeId, setActiveId] = useState({
     id: '',
   });

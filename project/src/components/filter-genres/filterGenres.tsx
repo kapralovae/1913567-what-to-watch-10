@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { chengeGenreAction, getFilmsWithGenreAction } from '../../action';
 import { useAppDisptach, useAppSelector } from '../../hooks';
+import { chengeGenreAction, getFilmsWithGenreAction } from '../../store/film-data/film-data';
+import { getGenreAction } from '../../store/film-data/selectors';
 import ListFilms from '../list-films/listFilm';
 
 function FilterGenres () {
-  const elementLi = useAppSelector((state) => state.genre);
+  const elementLi = useAppSelector(getGenreAction);
   const dispatch = useAppDisptach();
 
   const clickHandler = (evt: React.MouseEvent<HTMLLIElement>) => {

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../const';
+import { NameSpace, COUNT_RENDER_FILMS } from '../../const';
 import { FilmData } from '../../types/state';
 
 const initialState : FilmData = {
@@ -27,15 +27,15 @@ export const filmData = createSlice({
       }
 
       const filmsCount = state.filmsFilteredGenre.length;
-      state.filmsForRender = state.filmsFilteredGenre.slice(0, state.countRenderFilms);
-      if (filmsCount > state.countRenderFilms) {
+      state.filmsForRender = state.filmsFilteredGenre.slice(0, COUNT_RENDER_FILMS);
+      if (filmsCount > COUNT_RENDER_FILMS) {
         state.isRenderShowMoreButton = true;
       } else {
         state.isRenderShowMoreButton = false;
       }
     },
     getMoreFilms: (state) => {
-      const newRenderedMovieCount = Math.max(state.countRenderFilms, state.countRenderFilms + state.countRenderFilms);
+      const newRenderedMovieCount = Math.max(state.countRenderFilms, state.countRenderFilms + COUNT_RENDER_FILMS);
       state.filmsForRender = state.filmsFilteredGenre.slice(0, newRenderedMovieCount);
       state.countRenderFilms = newRenderedMovieCount;
       const filmsCount = state.filmsFilteredGenre.length;
@@ -48,8 +48,8 @@ export const filmData = createSlice({
     loadFilms: (state, action) => {
       state.films = action.payload;
       state.filmsFilteredGenre = state.films;
-      state.filmsForRender = state.films.slice(0, state.countRenderFilms);
-      if (state.films.length > state.countRenderFilms) {
+      state.filmsForRender = state.films.slice(0, COUNT_RENDER_FILMS);
+      if (state.films.length > COUNT_RENDER_FILMS) {
         state.isRenderShowMoreButton = true;
       } else {
         state.isRenderShowMoreButton = false;

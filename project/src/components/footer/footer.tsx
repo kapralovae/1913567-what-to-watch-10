@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { getFilmsWithGenreAction, resetFilterGenreAction } from '../../action';
 import { useAppDisptach } from '../../hooks';
+import { getFilmsWithGenreAction, resetFilterGenreAction } from '../../store/film-data/film-data';
 
 function Footer() {
   const disptch = useAppDisptach();

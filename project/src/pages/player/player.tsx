@@ -1,8 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import { getFilmsForRender } from '../../store/film-data/selectors';
 
 function Player() {
-  const films = useAppSelector((state) => state.filmsForRender);
+  const films = useAppSelector(getFilmsForRender);
   const filmId = Number(useParams().id);
   const film = films.find((element) => element.id === filmId);
 
