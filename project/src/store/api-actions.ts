@@ -30,12 +30,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
 }>(
   'checkAuth',
   async (_arg, {dispatch, extra: api}) => {
-    try {
-      await api.get(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
+    await api.get(APIRoute.Login);
   },
 );
 
@@ -65,12 +60,12 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const clearErrorAction = createAsyncThunk(
-  'clearError',
-  () => {
-    setTimeout(
-      () => store.dispatch(setError(null)),
-      TIMEOUT_SHOW_ERROR,
-    );
-  },
-);
+// export const clearErrorAction = createAsyncThunk(
+//   'clearError',
+//   () => {
+//     setTimeout(
+//       () => store.dispatch(setError(null)),
+//       TIMEOUT_SHOW_ERROR,
+//     );
+//   },
+// );
