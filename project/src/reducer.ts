@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { chengeGenreAction, getFilmsWithGenreAction, resetFilterGenreAction, getMoreFilms, loadFilms, requireAuthorization, setError, setDataLoadedStatus } from './action';
+import { chengeGenreAction, getFilmsWithGenreAction, resetFilterGenreAction, getMoreFilms, loadFilms, setError, setDataLoadedStatus } from './action';
 import { Films } from './types/film';
 import { AuthorizationStatus } from './const';
 
@@ -12,7 +12,6 @@ type InitialStateType = {
   isRenderShowMoreButton: boolean,
   countRenderFilms: number,
   filmsForRender: Films,
-  authorizationStatus: AuthorizationStatus,
   error: string | null,
   isDataLoaded: boolean,
 };
@@ -23,7 +22,6 @@ const initialState : InitialStateType = {
   isRenderShowMoreButton: false,
   countRenderFilms: 8,
   filmsForRender: [],
-  authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
   isDataLoaded: false,
 };
@@ -72,9 +70,6 @@ const reducer = createReducer(initialState, (builder) => {
       } else {
         state.isRenderShowMoreButton = false;
       }
-    })
-    .addCase(requireAuthorization, (state, action) => {
-      state.authorizationStatus = action.payload;
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;

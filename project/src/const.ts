@@ -21,6 +21,8 @@ export enum APIRoute {
 
 export enum NameSpace{
   User = 'User',
+  Data = 'Data',
+  Process = 'Process',
 }
 
 export const TIMEOUT_SHOW_ERROR = 3000;
