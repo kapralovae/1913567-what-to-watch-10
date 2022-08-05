@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDisptach } from '../../hooks';
 import { getFilmsWithGenreAction, resetFilterGenreAction } from '../../store/film-data/film-data';
@@ -9,6 +10,7 @@ function Logo() {
     disptch(resetFilterGenreAction());
     disptch(getFilmsWithGenreAction());
   };
+
   return (
     <div onClick={clickHandler} className="logo">
       <Link to="/" className="logo__link">
@@ -20,4 +22,4 @@ function Logo() {
   );
 }
 
-export default Logo;
+export default memo(Logo);
