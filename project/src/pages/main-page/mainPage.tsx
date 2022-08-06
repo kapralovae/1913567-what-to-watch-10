@@ -1,8 +1,7 @@
 import React from 'react';
-import { AvatarLogin } from '../../components/avatar-login/avatar-login';
 import FilterGenres from '../../components/filter-genres/filterGenres';
 import { Footer } from '../../components/footer/footer';
-import Logo from '../../components/logo/logo';
+import Header from '../../components/header/header';
 
 type InfoMainFilm = {
   nameMainFilm: string;
@@ -58,11 +57,7 @@ function MainPage(props: InfoMainFilm): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header film-card__head">
-          <Logo />
-
-          <AvatarLogin />
-        </header>
+        <Header />
 
         <div className="film-card__wrap">
           <div className="film-card__info">

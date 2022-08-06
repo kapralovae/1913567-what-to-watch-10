@@ -19,4 +19,12 @@ export enum APIRoute {
   Logout = '/logout',
 }
 
-export const TIMEOUT_SHOW_ERROR = 3000;
+export enum NameSpace{
+  User = 'User',
+  Data = 'Data',
+  Process = 'Process',
+}
+
+export const COUNT_RENDER_FILMS = 8;
+
+export const TIMEOUT_SHOW_ERROR = 2000;

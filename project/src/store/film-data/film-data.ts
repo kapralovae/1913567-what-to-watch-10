@@ -1,43 +1,25 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { chengeGenreAction, getFilmsWithGenreAction, resetFilterGenreAction, getMoreFilms, loadFilms, requireAuthorization, setError, setDataLoadedStatus } from './action';
-import { Films } from './types/film';
-import { AuthorizationStatus } from './const';
+import { createSlice } from '@reduxjs/toolkit';
+import { NameSpace, COUNT_RENDER_FILMS } from '../../const';
+import { FilmData } from '../../types/state';
 
-const COUNT_RENDER_FILMS = 8;
-
-type InitialStateType = {
-  genre: string,
-  films: Films,
-  filmsFilteredGenre: Films,
-  isRenderShowMoreButton: boolean,
-  countRenderFilms: number,
-  filmsForRender: Films,
-  authorizationStatus: AuthorizationStatus,
-  error: string | null,
-  isDataLoaded: boolean,
-};
-const initialState : InitialStateType = {
+const initialState : FilmData = {
   genre: 'All genres',
   films: [],
   filmsFilteredGenre: [],
   isRenderShowMoreButton: false,
   countRenderFilms: 8,
   filmsForRender: [],
-  authorizationStatus: AuthorizationStatus.Unknown,
   error: null,
-  isDataLoaded: false,
 };
 
-const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean =>
-  authorizationStatus === AuthorizationStatus.Unknown;
-
-
-const reducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(chengeGenreAction, (state, action) => {
+export const filmData = createSlice({
+  name: NameSpace.Data,
+  initialState,
+  reducers: {
+    chengeGenreAction: (state, action) => {
       state.genre = action.payload;
-    })
-    .addCase(getFilmsWithGenreAction, (state) => {
+    },
+    getFilmsWithGenreAction: (state) => {
       if (state.genre === 'All genres') {
         state.filmsFilteredGenre = state.films;
       } else {
@@ -51,8 +33,8 @@ const reducer = createReducer(initialState, (builder) => {
       } else {
         state.isRenderShowMoreButton = false;
       }
-    })
-    .addCase(getMoreFilms, (state) => {
+    },
+    getMoreFilms: (state) => {
       const newRenderedMovieCount = Math.max(state.countRenderFilms, state.countRenderFilms + COUNT_RENDER_FILMS);
       state.filmsForRender = state.filmsFilteredGenre.slice(0, newRenderedMovieCount);
       state.countRenderFilms = newRenderedMovieCount;
@@ -62,8 +44,8 @@ const reducer = createReducer(initialState, (builder) => {
       } else {
         state.isRenderShowMoreButton = false;
       }
-    })
-    .addCase(loadFilms, (state, action) => {
+    },
+    loadFilms: (state, action) => {
       state.films = action.payload;
       state.filmsFilteredGenre = state.films;
       state.filmsForRender = state.films.slice(0, COUNT_RENDER_FILMS);
@@ -72,19 +54,15 @@ const reducer = createReducer(initialState, (builder) => {
       } else {
         state.isRenderShowMoreButton = false;
       }
-    })
-    .addCase(requireAuthorization, (state, action) => {
-      state.authorizationStatus = action.payload;
-    })
-    .addCase(setError, (state, action) => {
+    },
+    setError: (state, action) => {
       state.error = action.payload;
-    })
-    .addCase(setDataLoadedStatus, (state, action) => {
-      state.isDataLoaded = action.payload;
-    })
-    .addCase(resetFilterGenreAction, (state) => {
+    },
+    resetFilterGenreAction: (state) => {
       state.genre = 'All genres';
-    });
+    },
+  },
+
 });
 
-export {reducer, isCheckedAuth};
+export const {chengeGenreAction, getFilmsWithGenreAction, getMoreFilms, loadFilms, setError, resetFilterGenreAction} = filmData.actions;
