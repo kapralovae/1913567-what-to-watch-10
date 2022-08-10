@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import { Tabs } from '../../components/tabs-film/tabsFilm';
 import { useAppSelector } from '../../hooks';
 import { getFilmsForRender } from '../../store/film-data/selectors';
 
@@ -10,6 +11,7 @@ function MoviePage () {
   const films = useAppSelector(getFilmsForRender);
   const filmId = Number(useParams().id);
   const film = films.find((element) => element.id === filmId);
+  // console.log(film);
   return (
     <section>
       <section className="film-card film-card--full">
@@ -58,37 +60,18 @@ function MoviePage () {
               <img src={film?.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
 
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="/" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/" className="film-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
+            <Tabs
+              director={film?.director}
+              runTime={film?.runTime}
+              genre={film?.genre}
+              released={film?.released}
+              starring={film?.starring}
+              rating={film?.rating}
+              description={film?.description}
+              scoresCount={film?.scoresCount}
+              id={film?.id}
+            />
 
-              <div className="film-rating">
-                <div className="film-rating__score">{film?.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{film?.rating}</span>
-                  <span className="film-rating__count">{film?.scoresCount}</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{film?.description}</p>
-
-                <p className="film-card__director"><strong>{film?.director}</strong></p>
-
-                <p className="film-card__starring"><strong>{film?.starring}</strong></p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
