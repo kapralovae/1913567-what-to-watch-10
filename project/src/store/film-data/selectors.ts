@@ -7,3 +7,4 @@ export const getFilmsWithGenreAction = (state: State): Films => state[NameSpace.
 export const getIsRenderShowMoreButton = (state: State): boolean => state[NameSpace.Data].isRenderShowMoreButton;
 export const getFilmsForRender = (state: State): Films => state[NameSpace.Data].filmsForRender;
 export const getError = (state: State): string | null => state[NameSpace.Data].error;
+export const getAllFilms = (state: State): Films => state[NameSpace.Data].films;

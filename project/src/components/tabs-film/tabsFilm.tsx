@@ -19,12 +19,6 @@ type PageTabsType = {
 function Tabs ({director, runTime, genre, released, starring, rating, description, scoresCount, id}: PageTabsType) {
   const [navLink, setNavLink] = useState('Overview');
 
-  // const clickHandler = (evt: React.MouseEvent<HTMLLIElement>) => {
-  //   evt.preventDefault();
-  //   const dataLink = evt.currentTarget.getAttribute('data-link');
-  //   setNavLink(dataLink);
-  // };
-
   return (
     <div className="film-card__desc">
       <NavTabs

@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
@@ -9,13 +8,6 @@ type NavTabsType = {
 }
 
 function NavTabs ({id, navLink, clickHandler}: NavTabsType) {
-  // const [navLink, setNavLink] = useState('Overview');
-
-  // const clickHandler = (evt: React.MouseEvent<HTMLLIElement>) => {
-  //   evt.preventDefault();
-  //   const dataLink = evt.currentTarget.getAttribute('data-link');
-  //   setNavLink(String(dataLink));
-  // };
 
   return(
     <nav className="film-nav film-card__nav">
