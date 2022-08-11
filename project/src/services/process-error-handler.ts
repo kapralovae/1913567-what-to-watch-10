@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TIMEOUT_SHOW_ERROR } from '../const';
 import { store } from '../store';
 import { setError } from '../store/film-data/film-data';
-// import { clearErrorAction } from '../store/api-actions';
 
 const clearErrorAction = createAsyncThunk(
   'clearError',

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Film } from '../../types/film';
 import VideoPlayer from '../videoplayer/videoPlayer';
 
-
 type CardType = {
   item: Film;
 }
