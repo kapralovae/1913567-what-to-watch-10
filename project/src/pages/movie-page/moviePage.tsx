@@ -1,17 +1,27 @@
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { MoreLikeThisFilms } from '../../components/more-like-this-films/more-like-this-films';
 import { Tabs } from '../../components/tabs-film/tabsFilm';
-import { useAppSelector } from '../../hooks';
-import { getAllFilms } from '../../store/film-data/selectors';
-
+import { useAppDisptach, useAppSelector } from '../../hooks';
+import { fetchAloneFilmAction } from '../../store/api-actions';
+import { getAloneFilmFromServer } from '../../store/film-process/selectors';
 
 function MoviePage () {
+  const dispatch = useAppDisptach();
+  const {id} = useParams();
 
-  const films = useAppSelector(getAllFilms);
-  const filmId = Number(useParams().id);
-  const film = films.find((element) => element.id === filmId);
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchAloneFilmAction(id));
+    }
+  }, [dispatch, id]);
+
+  const film = useAppSelector(getAloneFilmFromServer);
+
+  // const films = useAppSelector(getFilmsFromServer);
+  // const film = films.find((element) => element.id === filmId);
   return (
     <section>
       <section className="film-card film-card--full">
@@ -89,3 +99,4 @@ function MoviePage () {
 }
 
 export default MoviePage;
+

@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import { APIRoute} from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
-import { Films } from '../types/film';
+import { Film, Films } from '../types/film';
 import { AppDispatch, State } from '../types/state';
 import { UserData } from '../types/user-data';
 
@@ -15,6 +15,20 @@ export const fetchFilmsAction = createAsyncThunk<Films, undefined, {
   'fetchFilms',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<Films>(APIRoute.Films);
+    return data;
+  },
+);
+
+export const fetchAloneFilmAction = createAsyncThunk<Film, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchAloneFilm',
+  async (id, {dispatch, extra: api}) => {
+    // console.log(id);
+    // const filmId = String(useParams().id);
+    const {data} = await api.get<Film>(`/films/${id}`);
     return data;
   },
 );

@@ -1,6 +1,6 @@
 import { AuthorizationStatus } from '../const';
 import { store } from '../store';
-import { Films } from './film';
+import { Film, Films } from './film';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -23,4 +23,5 @@ export type FilmData = {
 export type FilmProcess = {
   films: Films,
   isDataLoaded: boolean,
+  film: Film,
 };
