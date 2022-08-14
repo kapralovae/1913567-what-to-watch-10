@@ -1,14 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAppDisptach } from '../../hooks';
 import { addComment } from '../../store/api-actions';
 
 function CommentForm () {
   const dispatch = useAppDisptach();
-  // const {id} = useParams();
+  const {id} = useParams();
 
   const [inputData, setInputData] = useState({
-    id: '2',
+    id: id ? id : '0',
     rating: 0,
     comment: '',
   });

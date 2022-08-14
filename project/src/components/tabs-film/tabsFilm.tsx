@@ -49,7 +49,9 @@ function Tabs ({director, runTime, genre, released, starring, rating, descriptio
         /> : null}
 
       {navLink === 'Reviews' ?
-        <MoviePageReviews/> : null}
+        <MoviePageReviews
+          id={id}
+        /> : null}
 
     </div>
   );

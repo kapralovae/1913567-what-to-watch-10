@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import CommentForm from '../../components/comment-form/commentForm';
 import Logo from '../../components/logo/logo';

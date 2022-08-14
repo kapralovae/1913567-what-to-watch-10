@@ -3,9 +3,9 @@ import { AxiosInstance } from 'axios';
 import { APIRoute} from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
-import { Film, Films } from '../types/film';
+import { Film, Films, ResponseComments } from '../types/film';
 import { AppDispatch, State } from '../types/state';
-import { ResponseComment, UserComment, UserData } from '../types/user-data';
+import { UserComment, UserData } from '../types/user-data';
 
 export const fetchFilmsAction = createAsyncThunk<Films, undefined, {
   dispatch: AppDispatch,
@@ -55,14 +55,14 @@ export const addComment = createAsyncThunk<void, UserComment, {
   },
 );
 
-export const fetchComments = createAsyncThunk<ResponseComment, string, {
+export const fetchComments = createAsyncThunk<ResponseComments, number, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'fetchComments',
   async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<ResponseComment>(`${APIRoute.Comment}/${id}`);
+    const {data} = await api.get<ResponseComments>(`${APIRoute.Comment}/${id}`);
     return data;
   },
 );

@@ -10,13 +10,3 @@ export type UserComment = {
   comment: string;
 };
 
-export type ResponseComment = {
-  comment: string
-  date: string
-  id: number
-  rating: number
-  user: {
-  id: number
-  name: string
-  }
-};

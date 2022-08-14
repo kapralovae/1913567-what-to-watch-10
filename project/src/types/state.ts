@@ -1,6 +1,6 @@
 import { AuthorizationStatus } from '../const';
 import { store } from '../store';
-import { Film, Films } from './film';
+import { Film, Films, ResponseComments } from './film';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -11,18 +11,19 @@ export type UserProcess = {
 };
 
 export type FilmData = {
-  genre: string,
-  films: Films,
-  filmsFilteredGenre: Films,
-  isRenderShowMoreButton: boolean,
-  countRenderFilms: number,
-  filmsForRender: Films,
-  error: string | null,
+  genre: string;
+  films: Films;
+  filmsFilteredGenre: Films;
+  isRenderShowMoreButton: boolean;
+  countRenderFilms: number;
+  filmsForRender: Films;
+  error: string | null;
 };
 
 export type FilmProcess = {
-  films: Films,
-  isDataLoaded: boolean,
-  film: Film,
-  similarFilms: Films,
+  films: Films;
+  isDataLoaded: boolean;
+  film: Film;
+  similarFilms: Films;
+  comments: ResponseComments;
 };
