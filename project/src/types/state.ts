@@ -24,4 +24,5 @@ export type FilmProcess = {
   films: Films,
   isDataLoaded: boolean,
   film: Film,
+  similarFilms: Films,
 };

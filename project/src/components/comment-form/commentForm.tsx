@@ -1,10 +1,16 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+// import { useParams } from 'react-router-dom';
+import { useAppDisptach } from '../../hooks';
+import { addComment } from '../../store/api-actions';
 
 function CommentForm () {
+  const dispatch = useAppDisptach();
+  // const {id} = useParams();
 
   const [inputData, setInputData] = useState({
-    rating: '',
-    'review-text': '',
+    id: '2',
+    rating: 0,
+    comment: '',
   });
 
   const [, setCheck] = useState(0);
@@ -20,6 +26,7 @@ function CommentForm () {
 
   const postForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    dispatch(addComment(inputData));
   };
 
   return(
@@ -60,7 +67,7 @@ function CommentForm () {
         </div>
 
         <div className="add-review__text">
-          <textarea onChange={inputChangeHandler} value={inputData['review-text']} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+          <textarea onChange={inputChangeHandler} value={inputData['comment']} className="add-review__textarea" name="comment" id="comment" placeholder="Review text"></textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>

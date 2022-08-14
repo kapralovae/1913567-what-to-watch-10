@@ -4,9 +4,11 @@ import { Footer } from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { MoreLikeThisFilms } from '../../components/more-like-this-films/more-like-this-films';
 import { Tabs } from '../../components/tabs-film/tabsFilm';
+import { AuthorizationStatus } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
-import { fetchAloneFilmAction } from '../../store/api-actions';
+import { fetchAloneFilmAction, fetchSimilarFilmAction } from '../../store/api-actions';
 import { getAloneFilmFromServer } from '../../store/film-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function MoviePage () {
   const dispatch = useAppDisptach();
@@ -15,13 +17,13 @@ function MoviePage () {
   useEffect(() => {
     if (id) {
       dispatch(fetchAloneFilmAction(id));
+      dispatch(fetchSimilarFilmAction(id));
     }
   }, [dispatch, id]);
 
   const film = useAppSelector(getAloneFilmFromServer);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  // const films = useAppSelector(getFilmsFromServer);
-  // const film = films.find((element) => element.id === filmId);
   return (
     <section>
       <section className="film-card film-card--full">
@@ -58,7 +60,7 @@ function MoviePage () {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={`/films/${film?.id}/review`} className="btn film-card__button">Add review</Link>
+                {authorizationStatus === AuthorizationStatus.Auth ? <Link to={`/films/${film?.id}/review`} className="btn film-card__button">Add review</Link> : null}
               </div>
             </div>
           </div>
@@ -87,10 +89,7 @@ function MoviePage () {
       </section>
 
       <div className="page-content">
-        <MoreLikeThisFilms
-          genre={film?.genre}
-          id={film?.id}
-        />
+        <MoreLikeThisFilms />
 
         <Footer />
       </div>

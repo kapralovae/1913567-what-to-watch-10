@@ -5,7 +5,7 @@ import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { Film, Films } from '../types/film';
 import { AppDispatch, State } from '../types/state';
-import { UserData } from '../types/user-data';
+import { ResponseComment, UserComment, UserData } from '../types/user-data';
 
 export const fetchFilmsAction = createAsyncThunk<Films, undefined, {
   dispatch: AppDispatch,
@@ -26,9 +26,43 @@ export const fetchAloneFilmAction = createAsyncThunk<Film, string, {
 }>(
   'fetchAloneFilm',
   async (id, {dispatch, extra: api}) => {
-    // console.log(id);
-    // const filmId = String(useParams().id);
-    const {data} = await api.get<Film>(`/films/${id}`);
+    const {data} = await api.get<Film>(`${APIRoute.Films}/${id}`);
+    return data;
+  },
+);
+
+export const fetchSimilarFilmAction = createAsyncThunk<Films, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchSimilarFilm',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Films>(`${APIRoute.Films}/${id}/similar`);
+    return data;
+  },
+);
+
+export const addComment = createAsyncThunk<void, UserComment, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'postComment',
+  async ({comment, rating, id}, {dispatch, extra: api}) => {
+    await api.post<UserComment>(`${APIRoute.Comment}/${id}`, {comment, rating});
+
+  },
+);
+
+export const fetchComments = createAsyncThunk<ResponseComment, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchComments',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<ResponseComment>(`${APIRoute.Comment}/${id}`);
     return data;
   },
 );

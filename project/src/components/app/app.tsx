@@ -29,11 +29,6 @@ function App({nameMainFilm, genreMainFilm, dateMainFilm}: AppProps): JSX.Element
     dispatch(loadFilms(filmsFromServer));
   }, [dispatch, filmsFromServer]);
 
-  // if ((authorizationStatus === AuthorizationStatus.Unknown) || isDataLoaded) {
-  //   return (
-  //     <LoadingScreen />
-  //   );
-  // }
   return (
     <BrowserRouter>
       <Routes>
