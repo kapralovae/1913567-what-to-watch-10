@@ -3,9 +3,9 @@ import { AxiosInstance } from 'axios';
 import { APIRoute} from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
-import { Films } from '../types/film';
+import { Film, Films, ResponseComments } from '../types/film';
 import { AppDispatch, State } from '../types/state';
-import { UserData } from '../types/user-data';
+import { UserComment, UserData } from '../types/user-data';
 
 export const fetchFilmsAction = createAsyncThunk<Films, undefined, {
   dispatch: AppDispatch,
@@ -15,6 +15,54 @@ export const fetchFilmsAction = createAsyncThunk<Films, undefined, {
   'fetchFilms',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<Films>(APIRoute.Films);
+    return data;
+  },
+);
+
+export const fetchAloneFilmAction = createAsyncThunk<Film, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchAloneFilm',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Film>(`${APIRoute.Films}/${id}`);
+    return data;
+  },
+);
+
+export const fetchSimilarFilmAction = createAsyncThunk<Films, string, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchSimilarFilm',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<Films>(`${APIRoute.Films}/${id}/similar`);
+    return data;
+  },
+);
+
+export const addComment = createAsyncThunk<void, UserComment, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'postComment',
+  async ({comment, rating, id}, {dispatch, extra: api}) => {
+    await api.post<UserComment>(`${APIRoute.Comment}/${id}`, {comment, rating});
+
+  },
+);
+
+export const fetchComments = createAsyncThunk<ResponseComments, number, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchComments',
+  async (id, {dispatch, extra: api}) => {
+    const {data} = await api.get<ResponseComments>(`${APIRoute.Comment}/${id}`);
     return data;
   },
 );

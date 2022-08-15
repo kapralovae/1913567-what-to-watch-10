@@ -6,9 +6,8 @@ import MoviePage from '../../pages/movie-page/moviePage';
 import MyList from '../../pages/my-list/myList';
 import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/signIn';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import PrivateRoute from '../private-route/privateRoute';
-import FilterGenres from '../filter-genres/filterGenres';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
@@ -26,33 +25,26 @@ function App({nameMainFilm, genreMainFilm, dateMainFilm}: AppProps): JSX.Element
   const isDataLoaded = useAppSelector(getIsDataLoader);
   const filmsFromServer = useAppSelector(getFilmsFromServer);
   const dispatch = useAppDisptach();
-  dispatch(loadFilms(filmsFromServer));
+  useEffect(() => {
+    dispatch(loadFilms(filmsFromServer));
+  }, [dispatch, filmsFromServer]);
 
-  if ((authorizationStatus === AuthorizationStatus.Unknown) || isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
-  }
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element =
-            {
+          element={
+            (authorizationStatus === AuthorizationStatus.Unknown) || isDataLoaded ? (
+              <LoadingScreen />
+            ) : (
               <MainPage
                 nameMainFilm={nameMainFilm}
                 genreMainFilm={genreMainFilm}
                 dateMainFilm={dateMainFilm}
               />
-            }
-        />
-        <Route
-          path='/:id'
-          element =
-            {
-              <FilterGenres/>
-            }
+            )
+          }
         />
         <Route
           path='/films/:id'
