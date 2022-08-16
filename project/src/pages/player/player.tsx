@@ -1,37 +1,106 @@
-import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
-import { getFilmsForRender } from '../../store/film-data/selectors';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useAppDisptach, useAppSelector } from '../../hooks';
+import { fetchAloneFilmAction } from '../../store/api-actions';
+import { getAloneFilmFromServer } from '../../store/film-process/selectors';
 
 function Player() {
-  const films = useAppSelector(getFilmsForRender);
-  const filmId = Number(useParams().id);
-  const film = films.find((element) => element.id === filmId);
+
+  const dispatch = useAppDisptach();
+  const {id} = useParams();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchAloneFilmAction(id));
+    }
+  }, [dispatch, id]);
+
+  const navigate = useNavigate();
+  const film = useAppSelector(getAloneFilmFromServer);
+
+  const clickExitHandler = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    navigate(AppRoute.Root);
+  };
+
+  const video = useRef<HTMLVideoElement>(null);
+  const [stateVideo, setStateVideo] = useState({
+    playText: 'Play',
+    useLink: '#play-s',
+    viewBox: '0 0 19 19',
+    widthButton: '19',
+    heightButton: '19',
+    timeValue: video.current?.currentTime ? Math.floor(video.current.currentTime) : 0,
+  });
+
+  useEffect(() => {
+    setStateVideo({
+      ...stateVideo,
+      timeValue: video.current?.currentTime ? Math.floor(video.current.currentTime) : 0
+    });
+  }, []);
+
+  function getDurationVideo (duration: number | undefined) {
+    if (duration) {
+      const time = Math.floor(duration);
+      return `${Math.floor(time / 3600)}:${Math.floor(time % 3600 / 60)}:${time % 60}`;
+    }
+  }
+
+  const clickPlayPauseHandler = () => {
+    if (video.current?.paused) {
+      setStateVideo({
+        ...stateVideo,
+        playText: 'Pause',
+        useLink: '#pause',
+        viewBox: '0 0 14 21',
+        widthButton: '14',
+        heightButton: '21',
+      });
+      video.current?.play();
+    } else {
+      setStateVideo({
+        ...stateVideo,
+        playText: 'Play',
+        useLink: '#play-s',
+        viewBox: '0 0 19 19',
+        widthButton: '19',
+        heightButton: '19',
+      });
+      video.current?.pause();
+
+    }
+
+  };
 
   return (
     <div className="player">
-      <video src={film?.videoLink} className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={film.videoLink} ref={video} className="player__video" poster={film.posterImage}>
+        {/* <source src={film.videoLink} type="video/mp4"></source> */}
+      </video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button onClick={clickExitHandler} type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
+            <progress className="player__progress" value={`${video.current?.currentTime ? Math.floor(video.current?.currentTime) : 0}`} max={`${video.current?.duration}`}></progress>
             <div className="player__toggler" style={{
-              left: '30%',
+              left: `${video.current?.currentTime ? Math.floor(video.current?.currentTime) : 0}`,
             }}
             >Toggler
             </div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{getDurationVideo(video.current?.duration)}</div>
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
+          <button onClick={clickPlayPauseHandler} type="button" className="player__play">
+            <svg viewBox={stateVideo.viewBox} width={stateVideo.widthButton} height={stateVideo.heightButton}>
+              <use xlinkHref={stateVideo.useLink}></use>
             </svg>
-            <span>Play</span>
+            <span>{stateVideo.playText}</span>
           </button>
           <div className="player__name">Transpotting</div>
 
