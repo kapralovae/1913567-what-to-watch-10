@@ -43,6 +43,18 @@ export const fetchSimilarFilmAction = createAsyncThunk<Films, string, {
   },
 );
 
+export const fetchFavoriteFilmAction = createAsyncThunk<Films, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchSimilarFilm',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<Films>(`${APIRoute.Favorite}`);
+    return data;
+  },
+);
+
 export const addComment = createAsyncThunk<void, UserComment, {
   dispatch: AppDispatch,
   state: State,

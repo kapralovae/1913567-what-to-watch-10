@@ -25,5 +25,6 @@ export type FilmProcess = {
   isDataLoaded: boolean;
   film: Film;
   similarFilms: Films;
+  favoriteFilms: Films;
   comments: ResponseComments;
 };

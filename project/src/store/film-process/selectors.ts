@@ -7,3 +7,4 @@ export const getAloneFilmFromServer = (state: State): Film => state[NameSpace.Pr
 export const getIsDataLoader = (state: State): boolean => state[NameSpace.Process].isDataLoaded;
 export const getSimilarFilms = (state: State): Films => state[NameSpace.Process].similarFilms;
 export const getComments = (state: State): ResponseComments => state[NameSpace.Process].comments;
+export const getFavoriteFilms = (state: State): Films => state[NameSpace.Process].favoriteFilms;

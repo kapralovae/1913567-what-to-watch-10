@@ -41,12 +41,52 @@ function Player() {
     });
   }, []);
 
-  function getDurationVideo (duration: number | undefined) {
-    if (duration) {
-      const time = Math.floor(duration);
+  function getDurationVideo (duration: number | undefined, currentTime: number | undefined) {
+    if (duration && currentTime) {
+      const time = Math.floor(duration - currentTime);
       return `${Math.floor(time / 3600)}:${Math.floor(time % 3600 / 60)}:${time % 60}`;
     }
   }
+
+  // const [time, setTime] = useState(0);
+  // const [percentTime, setPercentTime] = useState(0);
+  // const qwer = 100 / Math.floor(video.current?.duration ? video.current?.duration : 0);
+  // const [qwe, setQwe] = useState(0);
+  const [currentWatchedPercent, setCurrentWatchedPercent] = useState(0);
+  function updateTime () {
+    if (video.current?.currentTime || video.current?.duration) {
+      const percent = 100 * Number((video.current.currentTime).toFixed(2)) / Number((video.current.duration).toFixed(2));
+      setCurrentWatchedPercent(Math.round(percent));
+      console.log(video.current?.duration, video.current?.currentTime);
+    }
+  }
+  useEffect(() => {
+    // setInterval(() => {
+    //   setTime(video.current?.currentTime ? Math.floor(video.current.currentTime) : 0);
+    //   if (video.current) {
+    //     const percent = 100 * video.current.currentTime / video.current?.duration;
+    //     setCurrentWatchedPercent(Math.floor(percent));
+    //   }
+    // }, 1000);
+    if (video.current) {
+      video.current.addEventListener('timeupdate', updateTime);
+      return () => video.current?.removeEventListener('timeupdate', updateTime);
+    }
+    //1) Не вешать обработчик повторно, если он уже повешен
+    //2) Удалять обработчик после выхода
+    //3) Хук сделал что-то когда компонент умер.
+    //4) Хуки с [] и без []!!!
+
+    // setInterval(() => {
+    //   setPercentTime(qwe + qwer);
+    //   setQwe(percentTime);
+    //   console.log(percentTime);
+    // }, 1000);
+
+  },[video.current]);
+  // useEffect(() => {
+  // }, []);
+
 
   const clickPlayPauseHandler = () => {
     if (video.current?.paused) {
@@ -59,6 +99,7 @@ function Player() {
         heightButton: '21',
       });
       video.current?.play();
+
     } else {
       setStateVideo({
         ...stateVideo,
@@ -74,9 +115,13 @@ function Player() {
 
   };
 
+  const ckickFullScreenHandler = () => {
+    video.current?.requestFullscreen();
+  };
+
   return (
     <div className="player">
-      <video src={film.videoLink} ref={video} className="player__video" poster={film.posterImage}>
+      <video src={film.videoLink} ref={video} autoPlay className="player__video" poster={film.posterImage}>
         {/* <source src={film.videoLink} type="video/mp4"></source> */}
       </video>
 
@@ -85,14 +130,14 @@ function Player() {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value={`${video.current?.currentTime ? Math.floor(video.current?.currentTime) : 0}`} max={`${video.current?.duration}`}></progress>
+            <progress className="player__progress" value={`${(Number(video.current?.currentTime.toFixed(3)))}`} max={`${(video.current?.duration ? video.current?.duration : 0)}`}></progress>
             <div className="player__toggler" style={{
-              left: `${video.current?.currentTime ? Math.floor(video.current?.currentTime) : 0}`,
+              left: `${currentWatchedPercent}%`,
             }}
             >Toggler
             </div>
           </div>
-          <div className="player__time-value">{getDurationVideo(video.current?.duration)}</div>
+          <div className="player__time-value">{getDurationVideo(video.current?.duration, video.current?.currentTime)}</div>
         </div>
 
         <div className="player__controls-row">
@@ -104,7 +149,7 @@ function Player() {
           </button>
           <div className="player__name">Transpotting</div>
 
-          <button type="button" className="player__full-screen">
+          <button onClick={ckickFullScreenHandler} type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>
