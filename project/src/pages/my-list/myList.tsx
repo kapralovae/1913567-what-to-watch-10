@@ -7,7 +7,11 @@ import { fetchFavoriteFilmAction } from '../../store/api-actions';
 import { getFavoriteFilms } from '../../store/film-process/selectors';
 
 function MyList() {
+  const dispatch = useAppDisptach();
   const films = useAppSelector(getFavoriteFilms);
+  useEffect(() => {
+    dispatch(fetchFavoriteFilmAction());
+  },[]);
   console.log(films);
 
   return (
