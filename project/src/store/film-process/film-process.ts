@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { FilmProcess } from '../../types/state';
-import { addComment, fetchAloneFilmAction, fetchComments, fetchFavoriteFilmAction, fetchFilmsAction, fetchSimilarFilmAction } from '../api-actions';
+import { addComment, fetchAloneFilmAction, fetchChangeStatusFavoriteFilmAction, fetchComments, fetchFavoriteFilmAction, fetchFilmsAction, fetchSimilarFilmAction } from '../api-actions';
 
 const initialState: FilmProcess = {
   films: [],
@@ -28,6 +28,7 @@ const initialState: FilmProcess = {
   similarFilms: [],
   favoriteFilms: [],
   comments: [],
+  disableButton: false,
 };
 
 export const filmProcess = createSlice({
@@ -58,11 +59,16 @@ export const filmProcess = createSlice({
         state.isDataLoaded = true;
       })
       .addCase(fetchFavoriteFilmAction.fulfilled, (state, action) => {
-        state.similarFilms = action.payload;
+        state.favoriteFilms = action.payload;
+        console.log('return length array', state.favoriteFilms.length);
         state.isDataLoaded = false;
       })
-      .addCase(fetchFavoriteFilmAction.pending, (state) => {
-        state.isDataLoaded = true;
+      .addCase(fetchChangeStatusFavoriteFilmAction.fulfilled, (state, action) => {
+        state.film.isFavorite = action.payload.isFavorite;
+        state.disableButton = false;
+      })
+      .addCase(fetchChangeStatusFavoriteFilmAction.pending, (state) => {
+        state.disableButton = true;
       })
       .addCase(addComment.fulfilled, (state) => {
         state.isDataLoaded = false;

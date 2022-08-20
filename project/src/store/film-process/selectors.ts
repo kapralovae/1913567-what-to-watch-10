@@ -8,3 +8,4 @@ export const getIsDataLoader = (state: State): boolean => state[NameSpace.Proces
 export const getSimilarFilms = (state: State): Films => state[NameSpace.Process].similarFilms;
 export const getComments = (state: State): ResponseComments => state[NameSpace.Process].comments;
 export const getFavoriteFilms = (state: State): Films => state[NameSpace.Process].favoriteFilms;
+export const getDisableButton = (state: State): boolean => state[NameSpace.Process].disableButton;
