@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import { APIRoute} from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
-import { Film, Films, ResponseComments } from '../types/film';
+import { FavoriteFilmType, Film, Films, ResponseComments } from '../types/film';
 import { AppDispatch, State } from '../types/state';
 import { UserComment, UserData } from '../types/user-data';
 
@@ -39,6 +39,31 @@ export const fetchSimilarFilmAction = createAsyncThunk<Films, string, {
   'fetchSimilarFilm',
   async (id, {dispatch, extra: api}) => {
     const {data} = await api.get<Films>(`${APIRoute.Films}/${id}/similar`);
+    return data;
+  },
+);
+
+export const fetchFavoriteFilmAction = createAsyncThunk<Films, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchFavoriteFilm',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<Films>(`${APIRoute.Favorite}`);
+    return data;
+  },
+);
+
+export const fetchChangeStatusFavoriteFilmAction = createAsyncThunk<Film, FavoriteFilmType, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchChangeStatusFavoriteFilm',
+  async ({filmId, status}, {dispatch, extra: api}) => {
+    const {data} = await api.post<Film>(`${APIRoute.Favorite}/${filmId}/${status}`);
+    dispatch(fetchFavoriteFilmAction());
     return data;
   },
 );

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { FilmProcess } from '../../types/state';
-import { addComment, fetchAloneFilmAction, fetchComments, fetchFilmsAction, fetchSimilarFilmAction } from '../api-actions';
+import { addComment, fetchAloneFilmAction, fetchChangeStatusFavoriteFilmAction, fetchComments, fetchFavoriteFilmAction, fetchFilmsAction, fetchSimilarFilmAction } from '../api-actions';
 
 const initialState: FilmProcess = {
   films: [],
@@ -26,7 +26,9 @@ const initialState: FilmProcess = {
     isFavorite: false,
   },
   similarFilms: [],
+  favoriteFilms: [],
   comments: [],
+  disableButton: false,
 };
 
 export const filmProcess = createSlice({
@@ -55,6 +57,17 @@ export const filmProcess = createSlice({
       })
       .addCase(fetchSimilarFilmAction.pending, (state) => {
         state.isDataLoaded = true;
+      })
+      .addCase(fetchFavoriteFilmAction.fulfilled, (state, action) => {
+        state.favoriteFilms = action.payload;
+        state.isDataLoaded = false;
+      })
+      .addCase(fetchChangeStatusFavoriteFilmAction.fulfilled, (state, action) => {
+        state.film.isFavorite = action.payload.isFavorite;
+        state.disableButton = false;
+      })
+      .addCase(fetchChangeStatusFavoriteFilmAction.pending, (state) => {
+        state.disableButton = true;
       })
       .addCase(addComment.fulfilled, (state) => {
         state.isDataLoaded = false;

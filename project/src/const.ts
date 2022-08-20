@@ -3,8 +3,6 @@ export enum AppRoute {
   MyList = '/mylist',
   Films = '/films',
   Root = '/',
-  DevArtist = '/dev-artist',
-  DevGenre = '/dev-genre'
 }
 
 export enum AuthorizationStatus {
@@ -18,6 +16,7 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Comment = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum NameSpace{

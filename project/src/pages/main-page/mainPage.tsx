@@ -2,6 +2,7 @@ import React from 'react';
 import FilterGenres from '../../components/filter-genres/filterGenres';
 import { Footer } from '../../components/footer/footer';
 import Header from '../../components/header/header';
+import MylistButton from '../../components/mylist-button/mylist-button';
 
 type InfoMainFilm = {
   nameMainFilm: string;
@@ -11,6 +12,10 @@ type InfoMainFilm = {
 
 function MainPage(props: InfoMainFilm): JSX.Element {
   const {nameMainFilm, genreMainFilm, dateMainFilm} = props;
+  // const dispatch = useAppDisptach();
+  // const clickHandler = () => {
+
+  // };
 
   return(
     <React.Fragment>
@@ -79,13 +84,7 @@ function MainPage(props: InfoMainFilm): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                <MylistButton />
               </div>
             </div>
           </div>

@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { MoreLikeThisFilms } from '../../components/more-like-this-films/more-like-this-films';
+import MylistButton from '../../components/mylist-button/mylist-button';
 import { Tabs } from '../../components/tabs-film/tabsFilm';
 import { AuthorizationStatus } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
@@ -12,6 +13,7 @@ import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function MoviePage () {
   const dispatch = useAppDisptach();
+  const navigate = useNavigate();
   const {id} = useParams();
 
   useEffect(() => {
@@ -23,6 +25,10 @@ function MoviePage () {
 
   const film = useAppSelector(getAloneFilmFromServer);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const clickButtonPlayHandler = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    navigate(`/player/${film?.id}`);
+  };
 
   return (
     <section>
@@ -45,21 +51,13 @@ function MoviePage () {
               </p>
 
               <div className="film-card__buttons">
-                <Link to={`/player/${film?.id}`}>
-                  <button className="btn btn--play film-card__button" type="button">
-                    <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#play-s"></use>
-                    </svg>
-                    <span>Play</span>
-                  </button>
-                </Link>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
+                <button onClick={clickButtonPlayHandler} className="btn btn--play film-card__button" type="button">
+                  <svg viewBox="0 0 19 19" width="19" height="19">
+                    <use xlinkHref="#play-s"></use>
                   </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
+                  <span>Play</span>
                 </button>
+                <MylistButton />
                 {authorizationStatus === AuthorizationStatus.Auth ? <Link to={`/films/${film?.id}/review`} className="btn film-card__button">Add review</Link> : null}
               </div>
             </div>

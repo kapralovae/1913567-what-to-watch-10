@@ -36,3 +36,8 @@ export type ResponseComments = ResponseComment[];
 export type ListFilmsType = {
   films: Films;
 }
+
+export type FavoriteFilmType = {
+  filmId: number;
+  status: number;
+}
