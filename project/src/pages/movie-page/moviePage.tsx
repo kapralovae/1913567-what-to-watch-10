@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import { MoreLikeThisFilms } from '../../components/more-like-this-films/more-like-this-films';
 import MylistButton from '../../components/mylist-button/mylist-button';
 import { Tabs } from '../../components/tabs-film/tabsFilm';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AuthorizationStatus } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { fetchAloneFilmAction, fetchSimilarFilmAction } from '../../store/api-actions';
 import { getAloneFilmFromServer } from '../../store/film-process/selectors';

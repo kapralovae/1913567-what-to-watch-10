@@ -62,9 +62,7 @@ export const fetchChangeStatusFavoriteFilmAction = createAsyncThunk<Film, Favori
 }>(
   'fetchChangeStatusFavoriteFilm',
   async ({filmId, status}, {dispatch, extra: api}) => {
-    console.log('prevStatus', Boolean(!status));
     const {data} = await api.post<Film>(`${APIRoute.Favorite}/${filmId}/${status}`);
-    console.log('postStatus', data.isFavorite);
     dispatch(fetchFavoriteFilmAction());
     return data;
   },

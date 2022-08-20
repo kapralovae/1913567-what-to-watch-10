@@ -12,13 +12,9 @@ function MyListButton () {
 
   const clickHandler = () => {
     dispatch(fetchChangeStatusFavoriteFilmAction({filmId: Number(film.id), status: Number(!film.isFavorite)}));
-    // dispatch(fetchAloneFilmAction(String(film.id)));
-    console.log('nextFavoriteState', !film.isFavorite);
-    // dispatch(fetchFavoriteFilmAction());
   };
   useEffect(() => {
     dispatch(fetchFavoriteFilmAction());
-    console.log('currentFavoriteState', film.isFavorite);
   },[]);
   const filmsFavorite = useAppSelector(getFavoriteFilms);
 

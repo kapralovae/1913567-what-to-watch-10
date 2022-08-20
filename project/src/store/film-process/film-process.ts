@@ -60,7 +60,6 @@ export const filmProcess = createSlice({
       })
       .addCase(fetchFavoriteFilmAction.fulfilled, (state, action) => {
         state.favoriteFilms = action.payload;
-        console.log('return length array', state.favoriteFilms.length);
         state.isDataLoaded = false;
       })
       .addCase(fetchChangeStatusFavoriteFilmAction.fulfilled, (state, action) => {

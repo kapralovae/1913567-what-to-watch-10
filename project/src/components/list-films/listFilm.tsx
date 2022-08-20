@@ -37,7 +37,7 @@ function ListFilms (): JSX.Element{
       >
         {films.map((film) => <CardFilm item={film} key={film.id}></CardFilm>)}
       </div>
-      <ShowMoreButton />
+      <ShowMoreButton isMyListPage={films === filmsFavorite}/>
     </>
   );
 }

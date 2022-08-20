@@ -12,7 +12,6 @@ function MyList() {
   useEffect(() => {
     dispatch(fetchFavoriteFilmAction());
   },[]);
-  console.log(films);
 
   return (
     <div className="user-page">

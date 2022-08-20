@@ -26,11 +26,11 @@ function Player() {
 
   const video = useRef<HTMLVideoElement>(null);
   const [stateVideo, setStateVideo] = useState({
-    playText: 'Play',
-    useLink: '#play-s',
-    viewBox: '0 0 19 19',
-    widthButton: '19',
-    heightButton: '19',
+    playText: 'Pause',
+    useLink: '#pause',
+    viewBox: '0 0 14 21',
+    widthButton: '14',
+    heightButton: '21',
     timeValue: video.current?.currentTime ? Math.floor(video.current.currentTime) : 0,
   });
 
@@ -48,26 +48,15 @@ function Player() {
     }
   }
 
-  // const [time, setTime] = useState(0);
-  // const [percentTime, setPercentTime] = useState(0);
-  // const qwer = 100 / Math.floor(video.current?.duration ? video.current?.duration : 0);
-  // const [qwe, setQwe] = useState(0);
   const [currentWatchedPercent, setCurrentWatchedPercent] = useState(0);
   function updateTime () {
     if (video.current?.currentTime || video.current?.duration) {
       const percent = 100 * Number((video.current.currentTime).toFixed(2)) / Number((video.current.duration).toFixed(2));
       setCurrentWatchedPercent(Math.round(percent));
-      console.log(video.current?.duration, video.current?.currentTime);
     }
   }
   useEffect(() => {
-    // setInterval(() => {
-    //   setTime(video.current?.currentTime ? Math.floor(video.current.currentTime) : 0);
-    //   if (video.current) {
-    //     const percent = 100 * video.current.currentTime / video.current?.duration;
-    //     setCurrentWatchedPercent(Math.floor(percent));
-    //   }
-    // }, 1000);
+
     if (video.current) {
       video.current.addEventListener('timeupdate', updateTime);
       return () => video.current?.removeEventListener('timeupdate', updateTime);
@@ -76,17 +65,7 @@ function Player() {
     //2) Удалять обработчик после выхода
     //3) Хук сделал что-то когда компонент умер.
     //4) Хуки с [] и без []!!!
-
-    // setInterval(() => {
-    //   setPercentTime(qwe + qwer);
-    //   setQwe(percentTime);
-    //   console.log(percentTime);
-    // }, 1000);
-
   },[video.current]);
-  // useEffect(() => {
-  // }, []);
-
 
   const clickPlayPauseHandler = () => {
     if (video.current?.paused) {
@@ -116,13 +95,16 @@ function Player() {
   };
 
   const ckickFullScreenHandler = () => {
-    video.current?.requestFullscreen();
+    const player = document.querySelector('.player');
+    if (video.current && player) {
+      player.requestFullscreen();
+    }
   };
 
   return (
     <div className="player">
       <video src={film.videoLink} ref={video} autoPlay className="player__video" poster={film.posterImage}>
-        {/* <source src={film.videoLink} type="video/mp4"></source> */}
+
       </video>
 
       <button onClick={clickExitHandler} type="button" className="player__exit">Exit</button>
