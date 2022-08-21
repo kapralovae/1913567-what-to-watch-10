@@ -96,8 +96,10 @@ function Player() {
 
   const ckickFullScreenHandler = () => {
     const player = document.querySelector('.player');
-    if (video.current && player) {
+    if (!document.fullscreenElement && player) {
       player.requestFullscreen();
+    } else {
+      document.exitFullscreen();
     }
   };
 

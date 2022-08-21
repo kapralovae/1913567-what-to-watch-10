@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
@@ -7,6 +8,7 @@ import { getAuthorizationStatus } from '../../store/user-process/selectors';
 function AvatarLogin () {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDisptach();
+  const navigate = useNavigate();
 
   const clickHandler = (evt: React.MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
@@ -17,11 +19,16 @@ function AvatarLogin () {
     dispatch(logoutAction());
   };
 
+  const clickToMyListHandler = (evt: React.MouseEvent<HTMLDivElement>) => {
+    evt.preventDefault();
+    navigate(AppRoute.MyList);
+  };
+
   return(
     <ul className="user-block">
       {authorizationStatus === AuthorizationStatus.Auth ?
         <li className="user-block__item">
-          <div className="user-block__avatar">
+          <div onClick={clickToMyListHandler} className="user-block__avatar">
             <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
           </div>
         </li>

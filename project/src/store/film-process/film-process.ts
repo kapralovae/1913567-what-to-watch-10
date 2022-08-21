@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { FilmProcess } from '../../types/state';
-import { addComment, fetchAloneFilmAction, fetchChangeStatusFavoriteFilmAction, fetchComments, fetchFavoriteFilmAction, fetchFilmsAction, fetchSimilarFilmAction } from '../api-actions';
+import { addComment, fetchAloneFilmAction, fetchChangeStatusFavoriteFilmAction, fetchComments, fetchFavoriteFilmAction, fetchFilmsAction, fetchPromoFilmAction, fetchSimilarFilmAction } from '../api-actions';
 
 const initialState: FilmProcess = {
   films: [],
@@ -29,6 +29,25 @@ const initialState: FilmProcess = {
   favoriteFilms: [],
   comments: [],
   disableButton: false,
+  promoFilm: {
+    id: 1,
+    name: '',
+    posterImage: '',
+    previewImage: '',
+    backgroundImage: '',
+    backgroundColor: '',
+    videoLink: '',
+    previewVideoLink: '',
+    description: '',
+    rating: 1,
+    scoresCount: 1,
+    director: '',
+    starring: [''],
+    runTime: 1,
+    genre: '',
+    released: 1,
+    isFavorite: false,
+  },
 };
 
 export const filmProcess = createSlice({
@@ -61,6 +80,9 @@ export const filmProcess = createSlice({
       .addCase(fetchFavoriteFilmAction.fulfilled, (state, action) => {
         state.favoriteFilms = action.payload;
         state.isDataLoaded = false;
+      })
+      .addCase(fetchPromoFilmAction.fulfilled, (state, action) => {
+        state.promoFilm = action.payload;
       })
       .addCase(fetchChangeStatusFavoriteFilmAction.fulfilled, (state, action) => {
         state.film.isFavorite = action.payload.isFavorite;

@@ -9,3 +9,4 @@ export const getSimilarFilms = (state: State): Films => state[NameSpace.Process]
 export const getComments = (state: State): ResponseComments => state[NameSpace.Process].comments;
 export const getFavoriteFilms = (state: State): Films => state[NameSpace.Process].favoriteFilms;
 export const getDisableButton = (state: State): boolean => state[NameSpace.Process].disableButton;
+export const getPromoFilm = (state: State): Film => state[NameSpace.Process].promoFilm;

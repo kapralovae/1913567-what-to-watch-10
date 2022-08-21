@@ -6,12 +6,6 @@ import { store } from './store';
 import { checkAuthAction, fetchFilmsAction } from './store/api-actions';
 import ErrorMessage from './components/error-message/error-message';
 
-const Setting = {
-  NAME_MAIN_FILMS: 'The Grand Budapest Hotel',
-  GENRE_MAIN_FILM: 'Drama',
-  DATE_MAIN_FILM: 2014,
-};
-
 store.dispatch(checkAuthAction());
 store.dispatch(fetchFilmsAction());
 
@@ -24,11 +18,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ErrorMessage />
-      <App
-        nameMainFilm={Setting.NAME_MAIN_FILMS}
-        genreMainFilm={Setting.GENRE_MAIN_FILM}
-        dateMainFilm={Setting.DATE_MAIN_FILM}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
 );

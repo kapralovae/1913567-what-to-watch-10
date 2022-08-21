@@ -55,6 +55,18 @@ export const fetchFavoriteFilmAction = createAsyncThunk<Films, undefined, {
   },
 );
 
+export const fetchPromoFilmAction = createAsyncThunk<Film, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchPromoFilm',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<Film>(`${APIRoute.Promo}`);
+    return data;
+  },
+);
+
 export const fetchChangeStatusFavoriteFilmAction = createAsyncThunk<Film, FavoriteFilmType, {
   dispatch: AppDispatch,
   state: State,

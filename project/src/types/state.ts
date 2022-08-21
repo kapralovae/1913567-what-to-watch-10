@@ -28,4 +28,5 @@ export type FilmProcess = {
   favoriteFilms: Films;
   comments: ResponseComments;
   disableButton: boolean;
+  promoFilm: Film;
 };
