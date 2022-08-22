@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getFilmsForRender } from '../../store/film-data/selectors';
@@ -11,7 +12,7 @@ function ListFilms (): JSX.Element{
   const filmsFavorite = useAppSelector(getFavoriteFilms);
   const allFilms = useAppSelector(getFilmsForRender);
   let films;
-  if (window.location.pathname === AppRoute.MyList) {
+  if (useLocation().pathname === AppRoute.MyList) {
     films = filmsFavorite;
   } else {
     films = allFilms;

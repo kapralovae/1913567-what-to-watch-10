@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FilterGenres from '../../components/filter-genres/filterGenres';
 import { Footer } from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -9,11 +10,17 @@ import { getPromoFilm } from '../../store/film-process/selectors';
 
 function MainPage(): JSX.Element {
   const dispatch = useAppDisptach();
+  const navigate = useNavigate();
+  const film = useAppSelector(getPromoFilm);
   useEffect(() => {
     dispatch(fetchPromoFilmAction());
-  }, []);
+  }, [film]);
 
-  const film = useAppSelector(getPromoFilm);
+
+  const clickButtonPlayHandler = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    navigate(`/player/${film?.id}`);
+  };
 
   return(
     <React.Fragment>
@@ -76,7 +83,7 @@ function MainPage(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button onClick={clickButtonPlayHandler} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>

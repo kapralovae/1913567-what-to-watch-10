@@ -1,14 +1,21 @@
 import { memo, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { fetchChangeStatusFavoriteFilmAction, fetchFavoriteFilmAction } from '../../store/api-actions';
-import { getAloneFilmFromServer, getDisableButton, getFavoriteFilms } from '../../store/film-process/selectors';
+import { getAloneFilmFromServer, getDisableButton, getFavoriteFilms, getPromoFilm } from '../../store/film-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function MyListButton () {
   const dispatch = useAppDisptach();
-  const film = useAppSelector(getAloneFilmFromServer);
+  let film = useAppSelector(getAloneFilmFromServer);
   const isDisabled = useAppSelector(getDisableButton);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const promoFilm = useAppSelector(getPromoFilm);
 
-  // const fav = film.isFavorite;
+  if (useLocation().pathname !== `${AppRoute.Films}/${film.id}`) {
+    film = promoFilm;
+  }
 
   const clickHandler = () => {
     dispatch(fetchChangeStatusFavoriteFilmAction({filmId: Number(film.id), status: Number(!film.isFavorite)}));
@@ -18,15 +25,8 @@ function MyListButton () {
   },[]);
   const filmsFavorite = useAppSelector(getFavoriteFilms);
 
-  /*
-  1) Момоизация компонента + колбека
-  2) Выяснить что возвращает
-  3) Внутри fetchChangeStatusFavoriteFilmAction подменить старый фильм новым
-  4) В редусере подменить фильм isFavorite
-   */
-
   return(
-    <button onClick={clickHandler} className="btn btn--list film-card__button" type="button" disabled={isDisabled}>
+    <button onClick={clickHandler} className="btn btn--list film-card__button" type="button" disabled={isDisabled && authorizationStatus === AuthorizationStatus.Auth}>
       <svg viewBox="0 0 19 20" width="19" height="20">
         <use xlinkHref={film.isFavorite ? '#in-list' : '#add'}></use>
       </svg>
