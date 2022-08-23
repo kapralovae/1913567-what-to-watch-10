@@ -14,7 +14,7 @@ function MainPage(): JSX.Element {
   const film = useAppSelector(getPromoFilm);
   useEffect(() => {
     dispatch(fetchPromoFilmAction());
-  }, [film]);
+  }, []);
 
 
   const clickButtonPlayHandler = (evt: React.MouseEvent) => {

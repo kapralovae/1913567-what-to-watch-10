@@ -30,7 +30,7 @@ const initialState: FilmProcess = {
   comments: [],
   disableButton: false,
   promoFilm: {
-    id: 1,
+    id: 3,
     name: '',
     posterImage: '',
     previewImage: '',
