@@ -8,17 +8,41 @@ import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function MyListButton () {
   const dispatch = useAppDisptach();
-  let film = useAppSelector(getAloneFilmFromServer);
+  const film = useAppSelector(getAloneFilmFromServer);
   const isDisabled = useAppSelector(getDisableButton);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const promoFilm = useAppSelector(getPromoFilm);
 
-  if (useLocation().pathname !== `${AppRoute.Films}/${film.id}`) {
-    film = promoFilm;
+  const isMoviePage = useLocation().pathname === `${AppRoute.Films}/${film.id}`;
+  function isFavorite () {
+    if (isMoviePage) {
+      if (film.isFavorite) {
+        return '#in-list';
+      } else {
+        return '#add';
+      }
+    } else {
+      if (promoFilm.isFavorite) {
+        return '#in-list';
+      } else {
+        return '#add';
+      }
+
+    }
   }
+  // film.isFavorite ? '#in-list' : '#add'
+  // const promoFilm = useAppSelector(getPromoFilm);
+
+  // if (useLocation().pathname !== `${AppRoute.Films}/${film.id}`) {
+  //   film = promoFilm;
+  // }
 
   const clickHandler = () => {
-    dispatch(fetchChangeStatusFavoriteFilmAction({filmId: Number(film.id), status: Number(!film.isFavorite)}));
+    if (isMoviePage) {
+      dispatch(fetchChangeStatusFavoriteFilmAction({filmId: Number(film.id), status: Number(!film.isFavorite), promoId: -1}));
+    } else {
+      dispatch(fetchChangeStatusFavoriteFilmAction({filmId: Number(promoFilm.id), status: Number(!promoFilm.isFavorite), promoId: promoFilm.id}));
+    }
   };
   useEffect(() => {
     dispatch(fetchFavoriteFilmAction());
@@ -28,7 +52,7 @@ function MyListButton () {
   return(
     <button onClick={clickHandler} className="btn btn--list film-card__button" type="button" disabled={isDisabled && authorizationStatus === AuthorizationStatus.Auth}>
       <svg viewBox="0 0 19 20" width="19" height="20">
-        <use xlinkHref={film.isFavorite ? '#in-list' : '#add'}></use>
+        <use xlinkHref={isFavorite()}></use>
       </svg>
       <span>My list</span>
       <span className="film-card__count">{filmsFavorite.length}</span>

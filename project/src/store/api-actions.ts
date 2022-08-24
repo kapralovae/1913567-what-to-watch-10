@@ -73,9 +73,12 @@ export const fetchChangeStatusFavoriteFilmAction = createAsyncThunk<Film, Favori
   extra: AxiosInstance
 }>(
   'fetchChangeStatusFavoriteFilm',
-  async ({filmId, status}, {dispatch, extra: api}) => {
+  async ({filmId, status, promoId}, {dispatch, extra: api}) => {
     const {data} = await api.post<Film>(`${APIRoute.Favorite}/${filmId}/${status}`);
     dispatch(fetchFavoriteFilmAction());
+    if (promoId === filmId) {
+      dispatch(fetchPromoFilmAction());
+    }
     return data;
   },
 );
