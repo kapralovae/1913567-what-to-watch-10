@@ -42,7 +42,13 @@ function App(): JSX.Element {
         />
         <Route
           path='/films/:id/review'
-          element = {<AddReview />}
+          element = {
+            <PrivateRoute
+              authorizationStatus={authorizationStatus}
+            >
+              <AddReview />
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppRoute.MyList}
@@ -50,7 +56,6 @@ function App(): JSX.Element {
             <PrivateRoute
               authorizationStatus={authorizationStatus}
             >
-
               <MyList />
             </PrivateRoute>
           }

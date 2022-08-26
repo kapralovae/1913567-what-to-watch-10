@@ -31,19 +31,11 @@ function MyListButton () {
 
     }
   }
-  // if (authorizationStatus = AuthorizationStatus.Auth) {
 
-  // }
   useEffect(() => {
     authorizationStatus === AuthorizationStatus.Auth && dispatch(fetchFavoriteFilmAction());
   },[authorizationStatus]);
   const filmsFavorite = useAppSelector(getFavoriteFilms);
-  // film.isFavorite ? '#in-list' : '#add'
-  // const promoFilm = useAppSelector(getPromoFilm);
-
-  // if (useLocation().pathname !== `${AppRoute.Films}/${film.id}`) {
-  //   film = promoFilm;
-  // }
 
   const clickHandler = () => {
     if (authorizationStatus === AuthorizationStatus.NoAuth) {

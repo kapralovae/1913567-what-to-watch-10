@@ -12,11 +12,9 @@ function AvatarLogin () {
 
   const clickHandler = (evt: React.MouseEvent<HTMLLIElement>) => {
     evt.preventDefault();
-
-    if (authorizationStatus === AuthorizationStatus.NoAuth) {
-      return;
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      dispatch(logoutAction());
     }
-    dispatch(logoutAction());
   };
 
   const clickToMyListHandler = (evt: React.MouseEvent<HTMLDivElement>) => {

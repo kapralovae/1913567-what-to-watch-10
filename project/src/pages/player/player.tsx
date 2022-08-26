@@ -61,10 +61,6 @@ function Player() {
       video.current.addEventListener('timeupdate', updateTime);
       return () => video.current?.removeEventListener('timeupdate', updateTime);
     }
-    //1) Не вешать обработчик повторно, если он уже повешен
-    //2) Удалять обработчик после выхода
-    //3) Хук сделал что-то когда компонент умер.
-    //4) Хуки с [] и без []!!!
   },[video.current]);
 
   const clickPlayPauseHandler = () => {
