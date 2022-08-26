@@ -1,15 +1,20 @@
-import React, { FormEvent, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { FormEvent, Fragment, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import { AppRoute } from '../../const';
-import { useAppDisptach } from '../../hooks';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDisptach, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { AuthData } from '../../types/auth-data';
 
 function SignIn () {
   const dispatch = useAppDisptach();
   const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  useEffect(() => {
+    authorizationStatus === AuthorizationStatus.Auth && navigate(AppRoute.Root);
+  }, [authorizationStatus]);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -47,33 +52,42 @@ function SignIn () {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   return (
-    <div className="user-page">
-      <header className="page-header user-page__head">
-        <Logo />
+    authorizationStatus === AuthorizationStatus.Auth ?
+      <Fragment>
+        <h1>
+          Error 404 – Page not found!
+        </h1>
+        <Link to={AppRoute.Root}>
+          Go main page
+        </Link>
+      </Fragment> :
+      <div className="user-page">
+        <header className="page-header user-page__head">
+          <Logo />
 
-        <h1 className="page-title user-page__title">Sign in</h1>
-      </header>
+          <h1 className="page-title user-page__title">Sign in</h1>
+        </header>
 
-      <div className="sign-in user-page__content">
-        <form onSubmit={handleSubmit} action="#" className="sign-in__form">
-          <div className="sign-in__fields">
-            <div className="sign-in__field">
-              <input ref={loginRef} onInput={validateLogin} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
-              <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
+        <div className="sign-in user-page__content">
+          <form onSubmit={handleSubmit} action="#" className="sign-in__form">
+            <div className="sign-in__fields">
+              <div className="sign-in__field">
+                <input ref={loginRef} onInput={validateLogin} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
+                <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
+              </div>
+              <div className="sign-in__field">
+                <input ref={passwordRef} onInput={validatePassword} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
+                <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
+              </div>
             </div>
-            <div className="sign-in__field">
-              <input ref={passwordRef} onInput={validatePassword} className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
-              <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
+            <div className="sign-in__submit">
+              <button className="sign-in__btn" type="submit">Sign in</button>
             </div>
-          </div>
-          <div className="sign-in__submit">
-            <button className="sign-in__btn" type="submit">Sign in</button>
-          </div>
-        </form>
+          </form>
+        </div>
+
+        <Footer />
       </div>
-
-      <Footer />
-    </div>
   );
 }
 

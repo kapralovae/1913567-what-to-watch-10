@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { fetchChangeStatusFavoriteFilmAction, fetchFavoriteFilmAction } from '../../store/api-actions';
@@ -12,6 +12,7 @@ function MyListButton () {
   const isDisabled = useAppSelector(getDisableButton);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const promoFilm = useAppSelector(getPromoFilm);
+  const navigate = useNavigate();
 
   const isMoviePage = useLocation().pathname === `${AppRoute.Films}/${film.id}`;
   function isFavorite () {
@@ -30,6 +31,13 @@ function MyListButton () {
 
     }
   }
+  // if (authorizationStatus = AuthorizationStatus.Auth) {
+
+  // }
+  useEffect(() => {
+    authorizationStatus === AuthorizationStatus.Auth && dispatch(fetchFavoriteFilmAction());
+  },[authorizationStatus]);
+  const filmsFavorite = useAppSelector(getFavoriteFilms);
   // film.isFavorite ? '#in-list' : '#add'
   // const promoFilm = useAppSelector(getPromoFilm);
 
@@ -38,16 +46,17 @@ function MyListButton () {
   // }
 
   const clickHandler = () => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.SignIn);
+      return;
+    }
     if (isMoviePage) {
       dispatch(fetchChangeStatusFavoriteFilmAction({filmId: Number(film.id), status: Number(!film.isFavorite), promoId: -1}));
     } else {
       dispatch(fetchChangeStatusFavoriteFilmAction({filmId: Number(promoFilm.id), status: Number(!promoFilm.isFavorite), promoId: promoFilm.id}));
     }
   };
-  useEffect(() => {
-    dispatch(fetchFavoriteFilmAction());
-  },[]);
-  const filmsFavorite = useAppSelector(getFavoriteFilms);
+
 
   return(
     <button onClick={clickHandler} className="btn btn--list film-card__button" type="button" disabled={isDisabled && authorizationStatus === AuthorizationStatus.Auth}>
