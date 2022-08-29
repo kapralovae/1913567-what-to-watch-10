@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-export function transformTime (runTime: number | undefined) {
+export function getTransformTime (runTime: number | undefined) {
   if (typeof runTime === 'number') {
     return `${Math.floor(runTime / 60)}h ${runTime % 60}m`;
   }
