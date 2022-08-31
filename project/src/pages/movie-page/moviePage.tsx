@@ -8,15 +8,15 @@ import { Tabs } from '../../components/tabs-film/tabsFilm';
 import { AuthorizationStatus } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { fetchAloneFilmAction, fetchSimilarFilmAction } from '../../store/api-actions';
-import { getAllFilms } from '../../store/film-data/selectors';
-import { getAloneFilmFromServer } from '../../store/film-process/selectors';
+import { getAloneFilmFromServer, getFilmsFromServer } from '../../store/film-process/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function MoviePage () {
   const dispatch = useAppDisptach();
   const navigate = useNavigate();
   const {id} = useParams();
-  const allFilms = useAppSelector(getAllFilms);
+  const allFilms = useAppSelector(getFilmsFromServer);
+
   if (Number(id) > allFilms.length) {
     navigate('*');
   }
