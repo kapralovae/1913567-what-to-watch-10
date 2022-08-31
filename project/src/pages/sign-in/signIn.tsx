@@ -2,7 +2,7 @@ import React, { FormEvent, Fragment, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, REGULAR_LOGIN, REGULAR_PASSWORD } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
@@ -19,11 +19,9 @@ function SignIn () {
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
-  const regularLogin = /\w+@\w+\.\w+/;
-  const regularPassword = /(?=.*[a-zа-яA-ZА-Я])(?=.*[0-9])/;
 
   function validateLogin (evt: React.ChangeEvent<HTMLInputElement>) {
-    if (regularLogin.test(evt.target.value)) {
+    if (REGULAR_LOGIN.test(evt.target.value)) {
       evt.target.setCustomValidity('');
     } else {
       evt.target.setCustomValidity('Введите корректный e-mail. Пример: Alex1@bk.ru');
@@ -31,7 +29,7 @@ function SignIn () {
   }
 
   function validatePassword (evt: React.ChangeEvent<HTMLInputElement>) {
-    if (regularPassword.test(evt.target.value)) {
+    if (REGULAR_PASSWORD.test(evt.target.value)) {
       evt.target.setCustomValidity('');
     } else {
       evt.target.setCustomValidity('Пароль должен содержать одну букву и цифру');
@@ -40,7 +38,7 @@ function SignIn () {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (loginRef.current !== null && passwordRef.current !== null && regularLogin.test(loginRef.current.value) && regularPassword.test(passwordRef.current.value)) {
+    if (loginRef.current !== null && passwordRef.current !== null && REGULAR_LOGIN.test(loginRef.current.value) && REGULAR_PASSWORD.test(passwordRef.current.value)) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
