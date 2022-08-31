@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, DECIMAL_PLACES, FULL_TIME_IN_PERCENT, SECOND_IN_HOUR, SECOND_IN_MINUTE } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { fetchAloneFilmAction } from '../../store/api-actions';
 import { getAloneFilmFromServer } from '../../store/film-process/selectors';
 
 function Player() {
-  const FULL_TIME_IN_PERCENT = 100;
   const dispatch = useAppDisptach();
   const {id} = useParams();
 
@@ -44,7 +43,7 @@ function Player() {
   function getDurationVideo (duration: number | undefined, currentTime: number | undefined) {
     if (duration && currentTime) {
       const time = Math.floor(duration - currentTime);
-      return `${Math.floor(time / 3600)}:${Math.floor(time % 3600 / 60)}:${time % 60}`;
+      return `${Math.floor(time / SECOND_IN_HOUR)}:${Math.floor(time % SECOND_IN_HOUR / SECOND_IN_MINUTE)}:${time % SECOND_IN_MINUTE}`;
     }
   }
 
@@ -110,7 +109,7 @@ function Player() {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value={`${(Number(video.current?.currentTime.toFixed(3)))}`} max={`${(video.current?.duration ? video.current?.duration : 0)}`}></progress>
+            <progress className="player__progress" value={`${(Number(video.current?.currentTime.toFixed(DECIMAL_PLACES)))}`} max={`${(video.current?.duration ? video.current?.duration : 0)}`}></progress>
             <div className="player__toggler" style={{
               left: `${currentWatchedPercent}%`,
             }}
