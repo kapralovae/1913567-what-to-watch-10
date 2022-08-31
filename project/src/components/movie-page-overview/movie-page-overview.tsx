@@ -7,12 +7,29 @@ type PageOverviewType = {
 }
 
 function MoviePageOverview ({director, rating, description, scoresCount, starring}: PageOverviewType) {
+  const getDescriptionRating = (ratingLevel: number) => {
+    if (ratingLevel && ratingLevel < 3) {
+      return ('Bad');
+    }
+    if (ratingLevel && (ratingLevel >= 3 && ratingLevel < 5)) {
+      return ('Normal');
+    }
+    if (ratingLevel && (ratingLevel >= 5 && ratingLevel < 8)) {
+      return ('Good');
+    }
+    if (ratingLevel && (ratingLevel >= 8 && ratingLevel < 10)) {
+      return ('Very good');
+    }
+    if (ratingLevel && ratingLevel === 10) {
+      return ('Awesome');
+    }
+  };
   return (
     <>
       <div className="film-rating">
         <div className="film-rating__score">{rating}</div>
         <p className="film-rating__meta">
-          <span className="film-rating__level">{rating}</span>
+          <span className="film-rating__level">{getDescriptionRating(rating ? rating : 0)}</span>
           <span className="film-rating__count">{scoresCount}</span>
         </p>
       </div>

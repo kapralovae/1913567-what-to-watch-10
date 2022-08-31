@@ -14,13 +14,7 @@ import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { getFilmsFromServer, getIsDataLoader } from '../../store/film-process/selectors';
 import { loadFilms } from '../../store/film-data/film-data';
 
-type AppProps = {
-  nameMainFilm: string;
-  genreMainFilm: string;
-  dateMainFilm: number;
-}
-
-function App({nameMainFilm, genreMainFilm, dateMainFilm}: AppProps): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoaded = useAppSelector(getIsDataLoader);
   const filmsFromServer = useAppSelector(getFilmsFromServer);
@@ -38,11 +32,7 @@ function App({nameMainFilm, genreMainFilm, dateMainFilm}: AppProps): JSX.Element
             (authorizationStatus === AuthorizationStatus.Unknown) || isDataLoaded ? (
               <LoadingScreen />
             ) : (
-              <MainPage
-                nameMainFilm={nameMainFilm}
-                genreMainFilm={genreMainFilm}
-                dateMainFilm={dateMainFilm}
-              />
+              <MainPage />
             )
           }
         />
@@ -52,15 +42,20 @@ function App({nameMainFilm, genreMainFilm, dateMainFilm}: AppProps): JSX.Element
         />
         <Route
           path='/films/:id/review'
-          element = {<AddReview />}
+          element = {
+            <PrivateRoute
+              authorizationStatus={authorizationStatus}
+            >
+              <AddReview />
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppRoute.MyList}
           element = {
             <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
+              authorizationStatus={authorizationStatus}
             >
-
               <MyList />
             </PrivateRoute>
           }

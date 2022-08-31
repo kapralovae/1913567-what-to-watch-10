@@ -21,11 +21,12 @@ export type FilmData = {
 };
 
 export type FilmProcess = {
-  films: Films;
+  films: Films | undefined;
   isDataLoaded: boolean;
   film: Film;
   similarFilms: Films;
   favoriteFilms: Films;
   comments: ResponseComments;
   disableButton: boolean;
+  promoFilm: Film;
 };

@@ -55,15 +55,30 @@ export const fetchFavoriteFilmAction = createAsyncThunk<Films, undefined, {
   },
 );
 
+export const fetchPromoFilmAction = createAsyncThunk<Film, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchPromoFilm',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<Film>(`${APIRoute.Promo}`);
+    return data;
+  },
+);
+
 export const fetchChangeStatusFavoriteFilmAction = createAsyncThunk<Film, FavoriteFilmType, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'fetchChangeStatusFavoriteFilm',
-  async ({filmId, status}, {dispatch, extra: api}) => {
+  async ({filmId, status, promoId}, {dispatch, extra: api}) => {
     const {data} = await api.post<Film>(`${APIRoute.Favorite}/${filmId}/${status}`);
     dispatch(fetchFavoriteFilmAction());
+    if (promoId === filmId) {
+      dispatch(fetchPromoFilmAction());
+    }
     return data;
   },
 );
@@ -124,6 +139,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
+
   },
 );
 

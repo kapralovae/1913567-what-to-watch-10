@@ -8,6 +8,7 @@ import { Tabs } from '../../components/tabs-film/tabsFilm';
 import { AuthorizationStatus } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { fetchAloneFilmAction, fetchSimilarFilmAction } from '../../store/api-actions';
+import { getAllFilms } from '../../store/film-data/selectors';
 import { getAloneFilmFromServer } from '../../store/film-process/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
@@ -15,6 +16,10 @@ function MoviePage () {
   const dispatch = useAppDisptach();
   const navigate = useNavigate();
   const {id} = useParams();
+  const allFilms = useAppSelector(getAllFilms);
+  if (Number(id) > allFilms.length) {
+    navigate('*');
+  }
 
   useEffect(() => {
     if (id) {
@@ -67,7 +72,7 @@ function MoviePage () {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film?.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={film?.posterImage} alt={`${film.name} poster`} width="218" height="327" />
             </div>
 
             <Tabs

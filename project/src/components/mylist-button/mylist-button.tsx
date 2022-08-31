@@ -1,34 +1,59 @@
 import { memo, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { fetchChangeStatusFavoriteFilmAction, fetchFavoriteFilmAction } from '../../store/api-actions';
-import { getAloneFilmFromServer, getDisableButton, getFavoriteFilms } from '../../store/film-process/selectors';
+import { getAloneFilmFromServer, getDisableButton, getFavoriteFilms, getPromoFilm } from '../../store/film-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function MyListButton () {
   const dispatch = useAppDisptach();
   const film = useAppSelector(getAloneFilmFromServer);
   const isDisabled = useAppSelector(getDisableButton);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const promoFilm = useAppSelector(getPromoFilm);
+  const navigate = useNavigate();
 
-  // const fav = film.isFavorite;
+  const isMoviePage = useLocation().pathname === `${AppRoute.Films}/${film.id}`;
+  function isFavorite () {
+    if (isMoviePage) {
+      if (film.isFavorite) {
+        return '#in-list';
+      } else {
+        return '#add';
+      }
+    } else {
+      if (promoFilm.isFavorite) {
+        return '#in-list';
+      } else {
+        return '#add';
+      }
 
-  const clickHandler = () => {
-    dispatch(fetchChangeStatusFavoriteFilmAction({filmId: Number(film.id), status: Number(!film.isFavorite)}));
-  };
+    }
+  }
+
   useEffect(() => {
-    dispatch(fetchFavoriteFilmAction());
-  },[]);
+    authorizationStatus === AuthorizationStatus.Auth && dispatch(fetchFavoriteFilmAction());
+  },[authorizationStatus]);
   const filmsFavorite = useAppSelector(getFavoriteFilms);
 
-  /*
-  1) Момоизация компонента + колбека
-  2) Выяснить что возвращает
-  3) Внутри fetchChangeStatusFavoriteFilmAction подменить старый фильм новым
-  4) В редусере подменить фильм isFavorite
-   */
+  const clickHandler = () => {
+    if (authorizationStatus === AuthorizationStatus.NoAuth) {
+      navigate(AppRoute.SignIn);
+      return;
+    }
+    if (isMoviePage) {
+      dispatch(fetchChangeStatusFavoriteFilmAction({filmId: Number(film.id), status: Number(!film.isFavorite), promoId: -1}));
+    } else {
+      dispatch(fetchChangeStatusFavoriteFilmAction({filmId: Number(promoFilm.id), status: Number(!promoFilm.isFavorite), promoId: promoFilm.id}));
+    }
+  };
+
 
   return(
-    <button onClick={clickHandler} className="btn btn--list film-card__button" type="button" disabled={isDisabled}>
+    <button onClick={clickHandler} className="btn btn--list film-card__button" type="button" disabled={isDisabled && authorizationStatus === AuthorizationStatus.Auth}>
       <svg viewBox="0 0 19 20" width="19" height="20">
-        <use xlinkHref={film.isFavorite ? '#in-list' : '#add'}></use>
+        <use xlinkHref={isFavorite()}></use>
       </svg>
       <span>My list</span>
       <span className="film-card__count">{filmsFavorite.length}</span>

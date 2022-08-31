@@ -1,4 +1,4 @@
-import { transformTime } from '../../utils';
+import { getTransformTime } from '../../utils';
 
 type PageDetailsType = {
   director: string | undefined;
@@ -28,7 +28,7 @@ function MoviePageDetails ({director, runTime, genre, released, starring}:PageDe
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{transformTime(runTime)}</span>
+          <span className="film-card__details-value">{getTransformTime(runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

@@ -1,21 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FilterGenres from '../../components/filter-genres/filterGenres';
 import { Footer } from '../../components/footer/footer';
 import Header from '../../components/header/header';
 import MylistButton from '../../components/mylist-button/mylist-button';
+import { useAppDisptach, useAppSelector } from '../../hooks';
+import { fetchPromoFilmAction } from '../../store/api-actions';
+import { getPromoFilm } from '../../store/film-process/selectors';
 
-type InfoMainFilm = {
-  nameMainFilm: string;
-  genreMainFilm: string;
-  dateMainFilm: number;
-}
+function MainPage(): JSX.Element {
+  const dispatch = useAppDisptach();
+  const navigate = useNavigate();
+  const film = useAppSelector(getPromoFilm);
+  useEffect(() => {
+    dispatch(fetchPromoFilmAction());
+  }, []);
 
-function MainPage(props: InfoMainFilm): JSX.Element {
-  const {nameMainFilm, genreMainFilm, dateMainFilm} = props;
-  // const dispatch = useAppDisptach();
-  // const clickHandler = () => {
 
-  // };
+  const clickButtonPlayHandler = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    navigate(`/player/${film?.id}`);
+  };
 
   return(
     <React.Fragment>
@@ -57,7 +62,7 @@ function MainPage(props: InfoMainFilm): JSX.Element {
 
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={film.backgroundImage} alt={film.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -67,18 +72,18 @@ function MainPage(props: InfoMainFilm): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={film.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{nameMainFilm}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genreMainFilm}</span>
-                <span className="film-card__year">{dateMainFilm}</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <button onClick={clickButtonPlayHandler} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>

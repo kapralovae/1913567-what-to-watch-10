@@ -6,7 +6,7 @@ import { fetchAloneFilmAction } from '../../store/api-actions';
 import { getAloneFilmFromServer } from '../../store/film-process/selectors';
 
 function Player() {
-
+  const FULL_TIME_IN_PERCENT = 100;
   const dispatch = useAppDisptach();
   const {id} = useParams();
 
@@ -51,7 +51,7 @@ function Player() {
   const [currentWatchedPercent, setCurrentWatchedPercent] = useState(0);
   function updateTime () {
     if (video.current?.currentTime || video.current?.duration) {
-      const percent = 100 * Number((video.current.currentTime).toFixed(2)) / Number((video.current.duration).toFixed(2));
+      const percent = FULL_TIME_IN_PERCENT * Number((video.current.currentTime).toFixed(2)) / Number((video.current.duration).toFixed(2));
       setCurrentWatchedPercent(Math.round(percent));
     }
   }
@@ -61,10 +61,6 @@ function Player() {
       video.current.addEventListener('timeupdate', updateTime);
       return () => video.current?.removeEventListener('timeupdate', updateTime);
     }
-    //1) Не вешать обработчик повторно, если он уже повешен
-    //2) Удалять обработчик после выхода
-    //3) Хук сделал что-то когда компонент умер.
-    //4) Хуки с [] и без []!!!
   },[video.current]);
 
   const clickPlayPauseHandler = () => {
@@ -96,8 +92,10 @@ function Player() {
 
   const ckickFullScreenHandler = () => {
     const player = document.querySelector('.player');
-    if (video.current && player) {
+    if (!document.fullscreenElement && player) {
       player.requestFullscreen();
+    } else {
+      document.exitFullscreen();
     }
   };
 

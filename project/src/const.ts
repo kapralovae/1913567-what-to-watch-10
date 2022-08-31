@@ -17,6 +17,7 @@ export enum APIRoute {
   Logout = '/logout',
   Comment = '/comments',
   Favorite = '/favorite',
+  Promo = '/promo',
 }
 
 export enum NameSpace{
@@ -26,5 +27,7 @@ export enum NameSpace{
 }
 
 export const COUNT_RENDER_FILMS = 8;
+
+export const COUNT_RENDER_MORE_FILMS = 16;
 
 export const TIMEOUT_SHOW_ERROR = 2000;

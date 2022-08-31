@@ -40,4 +40,5 @@ export type ListFilmsType = {
 export type FavoriteFilmType = {
   filmId: number;
   status: number;
+  promoId: number;
 }
