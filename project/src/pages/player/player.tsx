@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AppRoute, DECIMAL_PLACES, FULL_TIME_IN_PERCENT, SECOND_IN_HOUR, SECOND_IN_MINUTE } from '../../const';
+import { AppRoute, DECIMAL_PLACES, FULL_TIME_IN_PERCENT, SECONDS_IN_HOUR, SECONDS_IN_MINUTE } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { fetchAloneFilmAction } from '../../store/api-actions';
 import { getAloneFilmFromServer } from '../../store/film-process/selectors';
@@ -43,14 +43,14 @@ function Player() {
   function getDurationVideo (duration: number | undefined, currentTime: number | undefined) {
     if (duration && currentTime) {
       const time = Math.floor(duration - currentTime);
-      return `${Math.floor(time / SECOND_IN_HOUR)}:${Math.floor(time % SECOND_IN_HOUR / SECOND_IN_MINUTE)}:${time % SECOND_IN_MINUTE}`;
+      return `${Math.floor(time / SECONDS_IN_HOUR)}:${Math.floor(time % SECONDS_IN_HOUR / SECONDS_IN_MINUTE)}:${time % SECONDS_IN_MINUTE}`;
     }
   }
 
   const [currentWatchedPercent, setCurrentWatchedPercent] = useState(0);
   function updateTime () {
     if (video.current?.currentTime || video.current?.duration) {
-      const percent = FULL_TIME_IN_PERCENT * Number((video.current.currentTime).toFixed(2)) / Number((video.current.duration).toFixed(2));
+      const percent = FULL_TIME_IN_PERCENT * Number((video.current.currentTime).toFixed(DECIMAL_PLACES)) / Number((video.current.duration).toFixed(DECIMAL_PLACES));
       setCurrentWatchedPercent(Math.round(percent));
     }
   }
